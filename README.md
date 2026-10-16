@@ -1,6 +1,6 @@
 # Projekt-Zespolowy-26-27-UG
 
-> **Nazwa produktu:** _do ustalenia_
+> **Nazwa produktu:** ZeroRisk
 
 Symulator gier hazardowych, w którym gra się wyłącznie wirtualną walutą, bez prawdziwych pieniędzy.
 
