@@ -22,7 +22,7 @@
 | Członek             | Preferowane godziny pracy nad projektem |
 | ------------------- | --------------------------------------- |
 | Patryk Matysiewicz  | _do uzupełnienia_                       |
-| Fabian Staszkiewicz | _do uzupełnienia_                       |
+| Fabian Staszkiewicz | 18:00 - 21:30                       |
 | Random              | _do uzupełnienia_                       |
 
 ## 3. Sposób podejmowania decyzji
@@ -45,7 +45,7 @@
 | Członek             | Rola                                       | Akceptacja |
 | ------------------- | ------------------------------------------ | ---------- |
 | Patryk Matysiewicz  | Lider / Product Owner, Developer, Infrastruktura | ☐          |
-| Fabian Staszkiewicz | Developer, QA, Infrastruktura              | ☐          |
+| Fabian Staszkiewicz | Developer, QA, Infrastruktura              | ☒          |
 | Random              | Developer, QA                              | ☐          |
 
 **Data przyjęcia kontraktu:** _do uzupełnienia po akceptacji przez wszystkich członków_
