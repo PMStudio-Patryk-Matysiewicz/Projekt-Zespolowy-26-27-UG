@@ -4,7 +4,7 @@
 
 ## 1. Kanał komunikacji i czas odpowiedzi
 
-- **Główny kanał:** Discord (serwer zespołu): bieżące rozmowy, pytania, ustalenia.
+- **Główny kanał:** messenger (grupa zespołu): bieżące rozmowy, pytania, ustalenia.
 - **Zadania i kod:** GitHub (Issues, Pull Requesty, komentarze w kodzie).
 - **Sprawy pilne:** wiadomość prywatna lub telefon.
 - **Czas odpowiedzi:**
@@ -21,9 +21,9 @@
 
 | Członek             | Preferowane godziny pracy nad projektem |
 | ------------------- | --------------------------------------- |
-| Patryk Matysiewicz  | _do uzupełnienia_                       |
-| Fabian Staszkiewicz | 18:00 - 21:30                       |
-| Random              | _do uzupełnienia_                       |
+| Patryk Matysiewicz  | 18:00 - 21:00                           |
+| Fabian Staszkiewicz | 18:00 - 21:30                           |
+| Dominik Serafin     | _do uzupełnienia_                       |
 
 ## 3. Sposób podejmowania decyzji
 
@@ -44,8 +44,8 @@
 
 | Członek             | Rola                                       | Akceptacja |
 | ------------------- | ------------------------------------------ | ---------- |
-| Patryk Matysiewicz  | Lider / Product Owner, Developer, Infrastruktura | ☐          |
+| Patryk Matysiewicz  | Lider / Product Owner, Developer, Infrastruktura | ☒    |
 | Fabian Staszkiewicz | Developer, QA, Infrastruktura              | ☒          |
-| Random              | Developer, QA                              | ☐          |
+| Dominik Serafin     | Developer, QA                              | ☐          |
 
 **Data przyjęcia kontraktu:** _do uzupełnienia po akceptacji przez wszystkich członków_
