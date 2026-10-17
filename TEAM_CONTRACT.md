@@ -23,7 +23,7 @@
 | ------------------- | --------------------------------------- |
 | Patryk Matysiewicz  | 18:00 - 21:00                           |
 | Fabian Staszkiewicz | 18:00 - 21:30                           |
-| Dominik Serafin     | _do uzupełnienia_                       |
+| Dominik Serafin     | 18:00 - 23:00                           |
 
 ## 3. Sposób podejmowania decyzji
 
