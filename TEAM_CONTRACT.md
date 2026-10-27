@@ -5,7 +5,7 @@
 ## 1. Kanał komunikacji i czas odpowiedzi
 
 - **Główny kanał:** messenger (grupa zespołu): bieżące rozmowy, pytania, ustalenia.
-- **Zadania i kod:** GitHub (Issues, Pull Requesty, komentarze w kodzie).
+- **Zadania i kod:** GitHub (Pull Requesty, komentarze w kodzie), Jira.
 - **Sprawy pilne:** wiadomość prywatna lub telefon.
 - **Czas odpowiedzi:**
   - zwykłe wiadomości: do **24 godzin** w dni robocze;

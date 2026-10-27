@@ -1,0 +1,24 @@
+# Ustawienia deweloperskie – `docker compose up` dokłada ten plik automatycznie.
+# Hasła są tylko lokalne, więc mogą być w repo. Na VPS ten plik nie jest używany.
+
+x-dev-db: &dev-db
+  POSTGRES_DB: zerorisk
+  POSTGRES_USER: zerorisk
+  POSTGRES_PASSWORD: zerorisk
+
+services:
+  db:
+    environment: *dev-db
+
+  backend:
+    environment:
+      <<: *dev-db
+      DJANGO_DEBUG: "1"
+    command: python manage.py runserver 0.0.0.0:8000
+    # Pliki tworzone w kontenerze (np. migracje) mają mieć właściciela jak na hoście.
+    # Linux z uid innym niż 1000 albo rootless podman: patrz docs/docker.md.
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    volumes:
+      - ./backend:/app:z
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"

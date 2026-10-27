@@ -18,17 +18,27 @@ Osoba, która lubi gry hazardowe, ale nie chce wydawać na nie prawdziwych pieni
 2. **Symulacja wyścigów konnych.** Użytkownik obstawia wirtualną walutą wyścigi, których przebieg i wynik generuje symulacja.
 3. **Gry karciane.** Użytkownik może zagrać m.in. w blackjacka i makao.
 
+## Uruchomienie
+
+Wystarczy Docker:
+
+```bash
+docker compose up --build
+```
+
+Aplikacja będzie pod <http://localhost:8000/admin/>. Polecenia deweloperskie i wdrożenie na VPS: [docs/docker.md](docs/docker.md). Zasady pracy z Gitem i Jirą: [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Zespół i role
 
 | Osoba                 | Role                                 |
 | --------------------- | ------------------------------------ |
 | Patryk Matysiewicz    | Lider / Product Owner, Developer, Infrastruktura     |
 | Fabian Staszkiewicz   | Developer, QA, Infrastruktura        |
-| Random                | Developer, QA        |
+| Dominik Serafin       | Developer, QA        |
 
 | Rola                  | Właściciel           |
 | --------------------- | -------------------- |
 | Lider / Product Owner | Patryk Matysiewicz   |
-| Developer             | Patryk Matysiewicz, Fabian Staszkiewicz, Random |
-| QA                    | Fabian Staszkiewicz, Random  |
+| Developer             | Patryk Matysiewicz, Fabian Staszkiewicz, Dominik Serafin |
+| QA                    | Fabian Staszkiewicz, Dominik Serafin  |
 | Infrastruktura        | Patryk Matysiewicz, Fabian Staszkiewicz  |

@@ -1,0 +1,28 @@
+# Produkcja (VPS). Sekrety i adresy są w .env (wzór: .env.prod.example).
+#   docker compose -f compose.yaml -f compose.prod.yaml up -d --build
+# Jeśli .env zawiera COMPOSE_FILE, wystarczy: docker compose up -d --build
+
+x-prod: &prod
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options:
+      max-size: "10m"
+      max-file: "3"
+
+services:
+  db:
+    <<: *prod
+    env_file: .env
+
+  backend:
+    <<: *prod
+    env_file: .env
+
+  nginx:
+    <<: *prod
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
