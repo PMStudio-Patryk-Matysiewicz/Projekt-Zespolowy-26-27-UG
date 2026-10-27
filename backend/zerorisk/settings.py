@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_spectacular',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -160,6 +161,10 @@ STORAGES = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Wersja widoczna w GET /api/health i w stopce strony: 7-znakowy skrót commita
+# ustawiany przy wdrożeniu (GIT_SHA=$(git rev-parse --short=7 HEAD)), lokalnie "dev".
+APP_VERSION = os.environ.get('GIT_SHA', 'dev')
+
 # Django REST Framework
 # Domyślnie API wymaga zalogowania (sesja + CSRF); publiczne widoki ustawiają AllowAny.
 REST_FRAMEWORK = {
@@ -176,5 +181,7 @@ REST_FRAMEWORK = {
 SPECTACULAR_SETTINGS = {
     'TITLE': 'ZeroRisk API',
     'DESCRIPTION': 'Virtual-chip casino: accounts, wallet, games.',
+    'VERSION': APP_VERSION,
     'SERVE_INCLUDE_SCHEMA': False,
+    'ENUM_NAME_OVERRIDES': {'HealthStateEnum': 'core.views.HEALTH_STATES'},
 }
