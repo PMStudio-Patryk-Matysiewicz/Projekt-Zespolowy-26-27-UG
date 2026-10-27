@@ -1,0 +1,32 @@
+name: Jira key
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  jira-key:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: SCRUM-xx w gałęzi, tytule PR i każdym commicie
+        env:
+          BRANCH: ${{ github.head_ref }}
+          TITLE: ${{ github.event.pull_request.title }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          key='SCRUM-[0-9]+'
+          fail=0
+          grep -Eq "$key" <<< "$BRANCH" || { echo "::error::Gałąź '$BRANCH' nie zawiera klucza SCRUM-xx."; fail=1; }
+          grep -Eq "$key" <<< "$TITLE" || { echo "::error::Tytuł PR nie zawiera klucza SCRUM-xx."; fail=1; }
+          if [ -n "$(git rev-list --merges "$BASE..$HEAD")" ]; then
+            echo "::error::PR zawiera merge commit. Zaktualizuj gałąź przez: git rebase origin/main"
+            fail=1
+          fi
+          while read -r sha subject; do
+            grep -Eq "^$key" <<< "$subject" || { echo "::error::Commit $sha nie zaczyna się od SCRUM-xx: $subject"; fail=1; }
+          done < <(git log --no-merges --format='%h %s' "$BASE..$HEAD")
+          exit $fail
