@@ -151,12 +151,19 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Statyki Django (np. panel admina) serwuje whitenoise prosto z gunicorna.
+# Na produkcji pliki z hashem w nazwie (manifest z collectstatic w obrazie).
+# W trybie deweloperskim i w CI zwykły storage: katalog backend/ jest tam podmontowany
+# na /app, więc manifestu z obrazu nie ma, a testy renderujące admina by padały.
 STORAGES = {
     'default': {
         'BACKEND': 'django.core.files.storage.FileSystemStorage',
     },
     'staticfiles': {
-        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+        'BACKEND': (
+            'django.contrib.staticfiles.storage.StaticFilesStorage'
+            if DEBUG
+            else 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+        ),
     },
 }
 
