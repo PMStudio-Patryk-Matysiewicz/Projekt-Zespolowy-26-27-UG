@@ -26,7 +26,7 @@ Wystarczy Docker:
 docker compose up --build
 ```
 
-Aplikacja będzie pod <http://localhost:8000/admin/>. Polecenia deweloperskie i wdrożenie na VPS: [docs/docker.md](docs/docker.md). Zasady pracy z Gitem i Jirą: [CONTRIBUTING.md](CONTRIBUTING.md).
+Aplikacja będzie pod <http://localhost:8000/admin/>. Stan i wersja: <http://localhost:8000/api/health>, dokumentacja API (Swagger): <http://localhost:8000/api/docs/>, kontrakt OpenAPI: <http://localhost:8000/api/schema/>. Polecenia deweloperskie i wdrożenie na VPS: [docs/docker.md](docs/docker.md). Zasady pracy z Gitem i Jirą: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Zespół i role
 
