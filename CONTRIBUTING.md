@@ -11,7 +11,7 @@ Każda zmiana w kodzie to zadanie w Jirze, osobna gałąź i Pull Request. Na `m
    git pull
    git switch -c feature/SCRUM-12-model-konia
    ```
-3. **Commituj** z kluczem zadania na początku:
+3. **Commituj** z kluczem zadania na początku – każdy commit trafi na `main`, a CI odrzuci commit bez klucza:
    ```bash
    git commit -m "SCRUM-12 Dodaj model konia"
    ```
@@ -20,15 +20,20 @@ Każda zmiana w kodzie to zadanie w Jirze, osobna gałąź i Pull Request. Na `m
    git push -u origin feature/SCRUM-12-model-konia
    ```
    Na GitHubie kliknij *Compare & pull request* (albo `gh pr create`). Tytuł: `SCRUM-12 Model konia`, opis według szablonu. Zadanie przesuń do **Code review**.
-5. **Review:** PR musi zatwierdzić ktoś inny niż autor, do 48 h od zgłoszenia. Poprawki po uwagach pushujesz na tę samą gałąź.
-6. **Scal** przyciskiem *Squash and merge* – robi to autor po zatwierdzeniu. Na `main` powstaje jeden commit z tytułem PR, a gałąź na GitHubie usuwa się sama. Zadanie przesuń do **Gotowe**.
+5. **Review:** PR musi zatwierdzić ktoś inny niż autor, do 48 h od zgłoszenia. Poprawki po uwagach pushujesz na tę samą gałąź. Wątek zamyka (*Resolve conversation*) osoba, która go otworzyła, gdy uzna poprawkę za wystarczającą.
+6. **Scal** przyciskiem *Rebase and merge* – robi to autor. GitHub pozwoli dopiero, gdy:
+   - jest 1 zatwierdzenie,
+   - checki `backend`, `frontend` i `jira-key` są zielone,
+   - wszystkie wątki w review są rozwiązane.
+
+   Tych warunków nie może obejść nikt, także admin. Gałąź na GitHubie usuwa się sama. Zadanie przesuń do **Gotowe**.
 7. **Posprzątaj lokalnie:**
    ```bash
    git switch main
    git pull
    git branch -D feature/SCRUM-12-model-konia
    ```
-   `-D`, bo po squashu Git nie rozpoznaje gałęzi jako scalonej.
+   `-D`, bo GitHub przy rebase tworzy nowe commity i Git nie rozpoznaje gałęzi jako scalonej.
 
 ## Nazwy gałęzi
 
@@ -49,10 +54,13 @@ Ktoś scalił swoje zmiany, a Ty jeszcze pracujesz na gałęzi:
 
 ```bash
 git fetch
-git merge origin/main
+git rebase origin/main
+git push --force-with-lease
 ```
 
-Konflikty rozwiązujesz u siebie. Bez rebase i `push --force` – i tak scalamy przez squash.
+Historia `main` musi być liniowa, więc nie używamy `git merge origin/main` – CI odrzuci PR z merge commitem. `--force-with-lease` tylko na własnej gałęzi.
+
+Przed scaleniem warto złączyć drobne commity typu „poprawka literówki”: `git rebase -i origin/main`.
 
 Jeśli po scaleniu dwie gałęzie dodały migrację o tym samym numerze w tej samej aplikacji Django:
 
@@ -71,7 +79,7 @@ i commitnij powstały plik.
 
 ## Kiedy zadanie jest gotowe
 
-- PR jest zatwierdzony i scalony do `main`.
+- PR jest zatwierdzony, checki są zielone i PR jest scalony do `main`.
 - Aplikacja wstaje z `docker compose up --build` i zmiana działa.
 - Migracje i nowe zależności (`requirements.txt`) są w PR.
 - Zadanie w Jirze jest w **Gotowe**.
