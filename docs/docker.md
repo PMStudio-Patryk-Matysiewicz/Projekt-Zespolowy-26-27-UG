@@ -21,7 +21,7 @@ cd Projekt-Zespolowy-26-27-UG
 docker compose up --build
 ```
 
-Aplikacja: <http://localhost:8000/admin/>. Plik `.env` nie jest potrzebny.
+Aplikacja: <http://localhost:8000/admin/>, stan i wersja: <http://localhost:8000/api/health>, dokumentacja API: <http://localhost:8000/api/docs/>. Plik `.env` nie jest potrzebny.
 
 Katalog `backend/` jest podmontowany do kontenera, więc serwer przeładowuje się sam po zapisaniu pliku. Migracje wykonują się przy każdym starcie backendu.
 
