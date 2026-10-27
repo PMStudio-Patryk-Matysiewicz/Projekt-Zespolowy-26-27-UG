@@ -90,27 +90,20 @@ WSGI_APPLICATION = 'zerorisk.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# W Dockerze (POSTGRES_HOST ustawione) – PostgreSQL, poza Dockerem – SQLite.
-if os.environ.get('POSTGRES_HOST'):
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'HOST': os.environ['POSTGRES_HOST'],
-            'PORT': os.environ.get('POSTGRES_PORT', '5432'),
-            'NAME': os.environ['POSTGRES_DB'],
-            'USER': os.environ['POSTGRES_USER'],
-            'PASSWORD': os.environ['POSTGRES_PASSWORD'],
-            'CONN_MAX_AGE': 60,
-            'CONN_HEALTH_CHECKS': True,
-        }
+# Zawsze PostgreSQL (lokalnie, w CI i na VPS) – bez SQLite.
+# Domyślne wartości pasują do compose.override.yaml; na VPS przychodzą z .env.
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
+        'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+        'NAME': os.environ.get('POSTGRES_DB', 'zerorisk'),
+        'USER': os.environ.get('POSTGRES_USER', 'zerorisk'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', ''),
+        'CONN_MAX_AGE': 60,
+        'CONN_HEALTH_CHECKS': True,
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
 
 
 # Password validation
