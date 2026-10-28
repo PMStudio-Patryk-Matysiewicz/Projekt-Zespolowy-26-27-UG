@@ -5,3 +5,19 @@ __pycache__
 .env
 */.env
 backend/staticfiles/
+
+# Lokalne nadpisania zmiennych (konwencja Vite). Nie używamy wzorca .env.*,
+# bo zignorowałby też .env.example i .env.prod.example.
+.env.local
+.env.*.local
+
+# Frontend (Vite + React + TypeScript)
+node_modules/
+frontend/dist/
+frontend/coverage/
+*.tsbuildinfo
+
+# Pliki systemowe i edytorów
+.DS_Store
+Thumbs.db
+.idea/
