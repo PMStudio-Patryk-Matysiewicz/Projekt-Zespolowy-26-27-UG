@@ -10,6 +10,7 @@ Cała aplikacja działa w Docker Compose. Lokalnie nie trzeba instalować Python
 | `backend/Dockerfile` | Obraz backendu (Python 3.13, Django 5.2 LTS). |
 | `nginx/` | Reverse proxy przed Django. Później będzie też serwować zbudowany frontend. |
 | `.env.prod.example` | Wzór pliku `.env` dla VPS. |
+| `.env.example` | Lista wszystkich zmiennych z opisem. Wszystkie zakomentowane, więc skopiowanie go do `.env` lokalnie niczego nie przełącza. |
 
 ## Lokalnie
 
