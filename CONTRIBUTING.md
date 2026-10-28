@@ -79,10 +79,7 @@ i commitnij powstały plik.
 
 ## Kiedy zadanie jest gotowe
 
-- PR jest zatwierdzony, checki są zielone i PR jest scalony do `main`.
-- Aplikacja wstaje z `docker compose up --build` i zmiana działa.
-- Migracje i nowe zależności (`requirements.txt`) są w PR.
-- Zadanie w Jirze jest w **Gotowe**.
+Zadanie przesuwamy w Jirze do **Gotowe** dopiero, gdy spełnia [Definition of Done](DEFINITION_OF_DONE.md).
 
 ## Typy zgłoszeń w Jirze
 
