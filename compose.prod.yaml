@@ -19,9 +19,13 @@ services:
     <<: *prod
     env_file: .env
 
-  nginx:
+  # nginx z zbudowanym Reactem: serwuje stronę i przekazuje /api, /admin i /static do Django.
+  frontend:
     <<: *prod
-    build: ./nginx
+    build:
+      context: ./frontend
+      args:
+        GIT_SHA: ${GIT_SHA:-dev}
     ports:
       - "80:80"
     depends_on:
