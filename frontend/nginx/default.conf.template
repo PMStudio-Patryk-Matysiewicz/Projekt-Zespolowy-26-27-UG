@@ -1,0 +1,19 @@
+server {
+    listen 80;
+    server_name _;
+
+    root /usr/share/nginx/html;
+
+    # Vite puts a content hash in every asset name, so assets can be cached for a year.
+    location /assets/ {
+        try_files $uri =404;
+        add_header Cache-Control "public, max-age=31536000, immutable";
+    }
+
+    # Any other path belongs to React Router: send index.html and let the app pick the page.
+    # no-cache makes the browser fetch a fresh index.html after every deploy.
+    location / {
+        try_files $uri /index.html;
+        add_header Cache-Control "no-cache";
+    }
+}
