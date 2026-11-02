@@ -13,5 +13,7 @@ RUN npm run build
 
 # 2. Serve: nginx with only the built files, no Node.js in the final image.
 FROM nginx:1.30-alpine
+# The image fills ${NGINX_LOCAL_RESOLVERS} in the template with the container's DNS servers.
+ENV NGINX_ENTRYPOINT_LOCAL_RESOLVERS=1
 COPY nginx/default.conf.template /etc/nginx/templates/default.conf.template
 COPY --from=build /app/dist /usr/share/nginx/html
