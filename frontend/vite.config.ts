@@ -16,6 +16,9 @@ export default defineConfig({
     proxy: Object.fromEntries(
       ['/api', '/admin', '/static'].map((path) => [path, { target: backendUrl, changeOrigin: false }]),
     ),
+    // Inside the Docker dev container (compose.override.yaml) file events from the host
+    // do not arrive, so Vite checks for changes itself.
+    watch: process.env.VITE_USE_POLLING === '1' ? { usePolling: true, interval: 300 } : undefined,
   },
   test: {
     environment: 'jsdom',
