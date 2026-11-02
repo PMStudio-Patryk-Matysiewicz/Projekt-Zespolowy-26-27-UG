@@ -5,10 +5,10 @@ Cała aplikacja działa w Docker Compose. Lokalnie nie trzeba instalować Python
 | Plik | Do czego |
 | --- | --- |
 | `compose.yaml` | Wspólna część: PostgreSQL i backend (Django). |
-| `compose.override.yaml` | Dev. Compose dokłada go sam przy `docker compose up`: `runserver`, kod podmontowany z dysku, port 8000, lokalne hasła. |
-| `compose.prod.yaml` | Produkcja: gunicorn, nginx na porcie 80, restart po awarii, rotacja logów, sekrety z `.env`. |
+| `compose.override.yaml` | Dev. Compose dokłada go sam przy `docker compose up`: `runserver` (port 8000), serwer Vite (port 5173), kod podmontowany z dysku, lokalne hasła. |
+| `compose.prod.yaml` | Produkcja: gunicorn, frontend (nginx) na porcie 80, restart po awarii, rotacja logów, sekrety z `.env`. |
 | `backend/Dockerfile` | Obraz backendu (Python 3.13, Django 5.2 LTS). |
-| `nginx/` | Reverse proxy przed Django. Później będzie też serwować zbudowany frontend. |
+| `frontend/Dockerfile` | Obraz produkcyjny frontu: Node buduje React, nginx serwuje `dist/` i przekazuje `/api/`, `/admin/` i `/static/` do Django (`frontend/nginx/default.conf.template`). |
 | `.env.prod.example` | Wzór pliku `.env` dla VPS. |
 | `.env.example` | Lista wszystkich zmiennych z opisem. Wszystkie zakomentowane, więc skopiowanie go do `.env` lokalnie niczego nie przełącza. |
 
@@ -22,9 +22,11 @@ cd Projekt-Zespolowy-26-27-UG
 docker compose up --build
 ```
 
-Aplikacja: <http://localhost:8000/admin/>, stan i wersja: <http://localhost:8000/api/health>, dokumentacja API: <http://localhost:8000/api/docs/>. Plik `.env` nie jest potrzebny.
+Aplikacja: <http://localhost:5173/> (React; `/api`, `/admin` i `/static` przekazuje do Django). Bezpośrednio do backendu: <http://localhost:8000/admin/>, stan i wersja: <http://localhost:8000/api/health>, dokumentacja API: <http://localhost:8000/api/docs/>. Plik `.env` nie jest potrzebny.
 
-Katalog `backend/` jest podmontowany do kontenera, więc serwer przeładowuje się sam po zapisaniu pliku. Migracje wykonują się przy każdym starcie backendu.
+Katalogi `backend/` i `frontend/` są podmontowane do kontenerów, więc oba serwery przeładowują się same po zapisaniu pliku. Migracje wykonują się przy każdym starcie backendu. Kontener frontu przy starcie robi `npm ci` (ok. 20–30 s) i trzyma własne `node_modules` dla Linuksa, niezależne od Twojego lokalnego.
+
+Jeśli wolisz uruchamiać front poza Dockerem (`cd frontend`, `npm install`, `npm run dev`), zatrzymaj kontener: `docker compose stop frontend`, bo oba używają portu 5173.
 
 ### Częste polecenia
 
@@ -49,6 +51,7 @@ W katalogu głównym repo możesz utworzyć `.env` z tymi zmiennymi – nic wię
 | --- | --- |
 | `LOCAL_UID`, `LOCAL_GID` | Pliki tworzone w kontenerze (migracje, `startapp`) dostają tego właściciela. Domyślnie 1000. Na Docker Desktop nic nie trzeba. Linux: wpisz wynik `id -u` i `id -g`, jeśli jest inny niż 1000. Rootless podman: `0` i `0` (root w kontenerze to Twój użytkownik na hoście). |
 | `BACKEND_PORT` | Port 8000 jest zajęty, np. `BACKEND_PORT=8001`. |
+| `FRONTEND_PORT` | Port 5173 jest zajęty, np. `FRONTEND_PORT=5174`. |
 
 ## VPS
 
@@ -125,4 +128,3 @@ Kontenery wstają same po restarcie serwera (`restart: unless-stopped`).
 ## Do zrobienia później
 
 - **HTTPS** – potrzebna nazwa domeny. Na Azure można za darmo ustawić etykietę DNS maszyny (`<nazwa>.<region>.cloudapp.azure.com`) i wystawić dla niej certyfikat Let's Encrypt. Po włączeniu HTTPS dopisać do `.env` adresy `https://`, a w ustawieniach Django włączyć `SESSION_COOKIE_SECURE` i `CSRF_COOKIE_SECURE`.
-- **Frontend (React + Vite)** – lokalnie osobny serwis z serwerem Vite. Na produkcji wieloetapowy obraz nginx: najpierw `npm run build`, potem nginx serwuje pliki z `dist/`, a do Django przekazuje tylko `/api/`, `/admin/` i `/static/`. Przy ~840 MB RAM budowanie frontendu na VPS może być wolne – wtedy lepiej budować obrazy w GitHub Actions i na serwerze tylko je pobierać.
