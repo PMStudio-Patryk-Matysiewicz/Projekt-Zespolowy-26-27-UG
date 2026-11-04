@@ -7,7 +7,7 @@ describe('routes', () => {
   it('shows the home page at /', async () => {
     renderRoute('/')
 
-    expect(await screen.findByRole('heading', { name: 'ZeroRisk' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1, name: 'Emocje kasyna. Zero ryzyka.' })).toBeInTheDocument()
   })
 
   it('shows the not found page for an unknown URL', async () => {
