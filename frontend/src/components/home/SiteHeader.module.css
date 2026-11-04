@@ -1,0 +1,74 @@
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem 0;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text);
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.logoMark {
+  color: var(--color-accent);
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 2rem;
+}
+
+.navLink,
+.login {
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.navLink {
+  color: var(--color-muted);
+}
+
+.login {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.navLink:hover,
+.login:hover {
+  color: var(--color-accent);
+}
+
+.signup {
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.signup:hover {
+  background: var(--color-accent-strong);
+}
+
+/* On phones keep the header on one line: only log in and sign up stay. */
+@media (max-width: 600px) {
+  .navLink {
+    display: none;
+  }
+
+  .nav {
+    gap: 1rem;
+  }
+}
