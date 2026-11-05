@@ -1,0 +1,153 @@
+.srOnly {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Daily bonus banner */
+
+.bonus {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid rgb(227 179 65 / 35%);
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgb(227 179 65 / 12%), rgb(227 179 65 / 4%));
+}
+
+.bonusIcon {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 8px;
+  background: rgb(227 179 65 / 16%);
+  color: var(--color-gold);
+}
+
+.bonusText {
+  flex: 1;
+  min-width: 12rem;
+}
+
+.bonusTitle {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.bonusDescription {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+}
+
+.bonusButton {
+  padding: 0.55rem 1.1rem;
+  border: 0;
+  border-radius: 8px;
+  background: var(--color-gold);
+  color: #2a1f05;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.bonusButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Games */
+
+.sectionHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.sectionHint {
+  color: var(--color-muted);
+  font-size: 0.75rem;
+}
+
+.games {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+/* Recent games and ranking */
+
+.panels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.panel {
+  padding: 1.1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: var(--color-surface);
+}
+
+.panelHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.panelTitle {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.panelLink {
+  font-size: 0.75rem;
+  text-decoration: none;
+}
+
+.panelLink:hover {
+  text-decoration: underline;
+}
+
+.empty {
+  margin: 0;
+  padding: 1.5rem 0;
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
+@media (max-width: 1100px) {
+  .games {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .games,
+  .panels {
+    grid-template-columns: 1fr;
+  }
+}

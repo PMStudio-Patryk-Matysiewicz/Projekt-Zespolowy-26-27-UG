@@ -1,7 +1,7 @@
 import type { ComponentType } from 'react'
 
 import styles from './FeatureTiles.module.css'
-import { BotIcon, CardsIcon, FlagIcon } from './icons'
+import { BotIcon, CardsIcon, FlagIcon } from '../icons'
 
 type Feature = {
   title: string

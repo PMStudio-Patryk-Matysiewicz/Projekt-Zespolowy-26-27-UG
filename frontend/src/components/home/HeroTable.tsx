@@ -1,5 +1,5 @@
 import styles from './HeroTable.module.css'
-import { BotIcon, LogoMark } from './icons'
+import { BotIcon, LogoMark } from '../icons'
 
 type Suit = '♠' | '♥' | '♦' | '♣'
 

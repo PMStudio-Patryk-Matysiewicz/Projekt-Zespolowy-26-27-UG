@@ -1,0 +1,167 @@
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100vh;
+  padding: 1.25rem 0.75rem;
+  border-right: 1px solid var(--color-border);
+  background: #0d1211;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.5rem 1.75rem;
+  color: var(--color-text);
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.logoMark {
+  color: var(--color-accent);
+}
+
+.nav {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.section {
+  margin: 0 0 0.5rem;
+  padding: 0 0.5rem;
+  color: var(--color-muted);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.list {
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.55rem 0.6rem;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--color-muted);
+  font: inherit;
+  font-size: 0.875rem;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.link:hover {
+  background: rgb(255 255 255 / 4%);
+  color: var(--color-text);
+}
+
+.active,
+.active:hover {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.disabled,
+.disabled:hover {
+  background: none;
+  color: rgb(154 166 161 / 60%);
+  cursor: default;
+}
+
+.soon {
+  margin-left: auto;
+  padding: 0.05rem 0.4rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.icon {
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.note {
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-surface);
+}
+
+.noteTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.noteText {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+}
+
+/* On narrow screens the sidebar becomes a scrollable bar above the content. */
+@media (max-width: 900px) {
+  .sidebar {
+    min-width: 0;
+    position: static;
+    height: auto;
+    padding: 0.75rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .logo {
+    padding-bottom: 0.75rem;
+  }
+
+  .nav {
+    display: flex;
+    gap: 0.25rem;
+    overflow-x: auto;
+  }
+
+  .section,
+  .note {
+    display: none;
+  }
+
+  .list {
+    display: flex;
+    gap: 0.25rem;
+    margin: 0;
+  }
+
+  .link {
+    white-space: nowrap;
+  }
+
+  .bottom {
+    margin-top: 0.5rem;
+  }
+}
