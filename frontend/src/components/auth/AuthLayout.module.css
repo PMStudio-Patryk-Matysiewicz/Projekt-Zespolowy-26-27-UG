@@ -1,0 +1,231 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  min-height: 100vh;
+}
+
+/* Left: green showcase */
+
+.showcase {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 2rem 2.5rem 2.5rem;
+  background: radial-gradient(ellipse at 30% 80%, #18513a 0%, #123f2c 60%, #0f3626 100%);
+}
+
+.logo {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text);
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.logoMark {
+  color: var(--color-accent);
+}
+
+.art {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.arc {
+  position: absolute;
+  top: 52%;
+  left: 35%;
+  width: 120%;
+  aspect-ratio: 1;
+  border: 1px solid rgb(227 179 65 / 22%);
+  border-radius: 50%;
+}
+
+.card {
+  position: absolute;
+  width: 80px;
+  height: 112px;
+  border-radius: 8px;
+  background: #fbfbf8;
+  color: #151515;
+  box-shadow: 0 12px 28px rgb(0 0 0 / 40%);
+  font-weight: 700;
+}
+
+.rank {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  font-size: 1.125rem;
+  line-height: 1;
+}
+
+.suit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.cardQ {
+  top: 40px;
+  right: 120px;
+  color: var(--color-red);
+  transform: rotate(-10deg);
+}
+
+.cardBack {
+  top: -8px;
+  right: 40px;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  border: 3px solid #fbfbf8;
+  background: #1a6243;
+  transform: rotate(4deg);
+}
+
+.backMark {
+  width: 36px;
+  height: 36px;
+  color: var(--color-accent);
+}
+
+.cardJ {
+  top: 80px;
+  right: 22px;
+  transform: rotate(6deg);
+}
+
+.chips {
+  position: absolute;
+  right: 32px;
+  bottom: 40px;
+  width: 36px;
+  height: 46px;
+}
+
+.chip {
+  position: absolute;
+  left: 0;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 36px;
+  height: 36px;
+  border: 3px dashed rgb(255 255 255 / 75%);
+  border-radius: 50%;
+  box-shadow: 0 3px 6px rgb(0 0 0 / 40%);
+  color: #10231a;
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+
+.chipRed {
+  bottom: 0;
+  background: #c44536;
+}
+
+.chipGold {
+  bottom: 5px;
+  background: #e07b39;
+}
+
+.chipGreen {
+  bottom: 10px;
+  background: var(--color-accent);
+}
+
+.copy {
+  position: relative;
+  z-index: 1;
+  max-width: 24rem;
+}
+
+.headline {
+  margin: 0 0 1rem;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.lead {
+  margin: 0 0 1.5rem;
+  color: rgb(238 243 240 / 60%);
+  font-size: 0.8125rem;
+}
+
+.perks {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+}
+
+.perks li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.check {
+  width: 15px;
+  height: 15px;
+  color: var(--color-accent);
+}
+
+/* Right: the form */
+
+.formSide {
+  display: grid;
+  place-items: center;
+  padding: 3rem 1.5rem;
+}
+
+.formBox {
+  width: 100%;
+  max-width: 26rem;
+}
+
+/* Phones and tablets: showcase becomes a short banner above the form. */
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .showcase {
+    min-height: 0;
+    padding: 1.5rem;
+  }
+
+  .art,
+  .lead,
+  .perks {
+    display: none;
+  }
+
+  .copy {
+    margin-top: 1.5rem;
+  }
+
+  .headline {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  .formSide {
+    padding: 2rem 1.25rem 3rem;
+  }
+}

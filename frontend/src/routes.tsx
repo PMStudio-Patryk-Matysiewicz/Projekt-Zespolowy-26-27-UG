@@ -5,6 +5,7 @@ import PlayerLayout from './components/player/PlayerLayout'
 import HomePage from './pages/HomePage'
 import LobbyPage from './pages/LobbyPage'
 import NotFoundPage from './pages/NotFoundPage'
+import RegisterPage from './pages/RegisterPage'
 
 // One list of routes for the app (createBrowserRouter) and tests (createMemoryRouter).
 export const routes: RouteObject[] = [
@@ -13,6 +14,7 @@ export const routes: RouteObject[] = [
     Component: App,
     children: [
       { index: true, Component: HomePage },
+      { path: 'rejestracja', Component: RegisterPage },
       {
         // Pages of a logged-in player share the sidebar and the top bar with the balance.
         Component: PlayerLayout,
