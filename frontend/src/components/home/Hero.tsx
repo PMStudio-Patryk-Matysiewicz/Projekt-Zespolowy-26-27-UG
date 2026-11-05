@@ -2,7 +2,7 @@ import { Link } from 'react-router'
 
 import styles from './Hero.module.css'
 import HeroTable from './HeroTable'
-import { CheckIcon } from './icons'
+import { CheckIcon } from '../icons'
 
 const perks = ['Bez wpłat', 'Legalnie', 'Boty AI zamiast graczy']
 

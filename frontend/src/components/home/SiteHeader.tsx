@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 
-import { LogoMark } from './icons'
+import { LogoMark } from '../icons'
 import styles from './SiteHeader.module.css'
 
 export default function SiteHeader() {

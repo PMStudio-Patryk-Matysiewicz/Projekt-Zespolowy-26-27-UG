@@ -1,0 +1,27 @@
+.layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.page {
+  flex: 1;
+  padding: 1.5rem 1.75rem 2.5rem;
+}
+
+@media (max-width: 900px) {
+  /* minmax(0, …) lets the sidebar's menu scroll sideways instead of widening the page. */
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .page {
+    padding: 1.25rem 1rem 2rem;
+  }
+}

@@ -1,0 +1,127 @@
+.art {
+  position: relative;
+  overflow: hidden;
+  height: 80px;
+  background: linear-gradient(180deg, #1c5a3d 0%, #164831 100%);
+}
+
+/* Cards */
+
+.card {
+  position: absolute;
+  width: 38px;
+  height: 54px;
+  border-radius: 4px;
+  background: #fbfbf8;
+  color: #151515;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 35%);
+  font-weight: 700;
+}
+
+.red {
+  color: var(--color-red);
+}
+
+.rank {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  font-size: 0.6875rem;
+  line-height: 1;
+}
+
+.suit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.back {
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  border: 2px solid #fbfbf8;
+  background: var(--color-felt-dark);
+}
+
+.backMark {
+  width: 16px;
+  height: 16px;
+  color: var(--color-accent);
+}
+
+/* Blackjack: dealer cards on top, player cards below, one chip */
+
+.bj1 { top: 8px; left: calc(50% - 50px); }
+.bj2 { top: 6px; left: calc(50% - 8px); }
+.bj3 { top: 46px; left: calc(50% - 40px); transform: rotate(-8deg); }
+.bj4 { top: 46px; left: calc(50% - 10px); transform: rotate(6deg); }
+
+.chip {
+  position: absolute;
+  top: 46px;
+  left: calc(50% + 46px);
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  border: 3px dashed rgb(255 255 255 / 75%);
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #10231a;
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+
+/* Makao: a deck on the left, a fanned hand on the right */
+
+.mk0 { top: 12px; left: calc(50% - 92px); width: 42px; height: 58px; }
+.mk1 { top: 26px; left: calc(50% - 22px); transform: rotate(-12deg); }
+.mk2 { top: 18px; left: calc(50% + 6px); transform: rotate(-4deg); }
+.mk3 { top: 18px; left: calc(50% + 34px); transform: rotate(4deg); }
+.mk4 { top: 24px; left: calc(50% + 62px); transform: rotate(12deg); }
+
+/* Racing: lanes with horses moving towards the finish line */
+
+.track {
+  position: absolute;
+  inset: 6px 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.lane {
+  position: relative;
+  height: 12px;
+  border-bottom: 1px solid rgb(255 255 255 / 10%);
+}
+
+.trail {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 2px;
+}
+
+.horse {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.finish {
+  position: absolute;
+  top: 0;
+  right: 14%;
+  bottom: 0;
+  width: 3px;
+  background: rgb(255 255 255 / 75%);
+}
