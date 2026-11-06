@@ -6,7 +6,7 @@ Cała aplikacja działa w Docker Compose. Lokalnie nie trzeba instalować Python
 | --- | --- |
 | `compose.yaml` | Wspólna część: PostgreSQL i backend (Django). |
 | `compose.override.yaml` | Dev. Compose dokłada go sam przy `docker compose up`: `runserver` (port 8000), serwer Vite (port 5173), kod podmontowany z dysku, lokalne hasła. |
-| `compose.prod.yaml` | Produkcja: gunicorn, frontend (nginx) na porcie 80, restart po awarii, rotacja logów, sekrety z `.env`. |
+| `compose.prod.yaml` | Produkcja: gunicorn, frontend (nginx) na portach 80 i 443 (HTTPS), restart po awarii, rotacja logów, sekrety z `.env`. |
 | `backend/Dockerfile` | Obraz backendu (Python 3.13, Django 5.2 LTS). |
 | `frontend/Dockerfile` | Obraz produkcyjny frontu: Node buduje React, nginx serwuje `dist/` i przekazuje `/api/`, `/admin/` i `/static/` do Django (`frontend/nginx/default.conf.template`). |
 | `.env.prod.example` | Wzór pliku `.env` dla VPS. |
@@ -77,9 +77,11 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 for u in patryk fabian dominik; do sudo usermod -aG docker "$u"; done
 ```
 
-**2. Port 80 w Azure.** W portalu: maszyna wirtualna → *Networking* → *Add inbound port rule* → port `80`, protokół TCP. Bez tego strona nie będzie widoczna z internetu, mimo że kontenery działają.
+**2. Porty 80 i 443 w Azure.** W portalu: maszyna wirtualna → *Networking* → *Add inbound port rule* → porty `80,443`, protokół TCP. Bez tego strona nie będzie widoczna z internetu, mimo że kontenery działają. Port 80 tylko przekierowuje na HTTPS i jest potrzebny certbotowi.
 
-**3. Kod i `.env`:**
+**3. Nazwa domeny w Azure.** Maszyna wirtualna → *Overview* → *DNS name* → *Configure*, wpisz etykietę (np. `zerorisk`). Powstanie domena `zerorisk.<region>.cloudapp.azure.com`; to ona trafia do `DOMAIN` w `.env`.
+
+**4. Kod i `.env`:**
 
 ```bash
 git clone --config core.sharedRepository=group \
@@ -87,7 +89,7 @@ git clone --config core.sharedRepository=group \
 cd /srv/projekt/zerorisk
 cp .env.prod.example .env
 chmod 660 .env
-nano .env    # uzupełnij klucz, hasło do bazy i adres serwera
+nano .env    # uzupełnij klucz, hasło do bazy i domenę
 ```
 
 Klucz i hasło wygenerujesz poleceniem `python3 -c "import secrets; print(secrets.token_urlsafe(50))"`.
@@ -97,6 +99,20 @@ Każda osoba poza tą, która sklonowała repo, musi raz oznaczyć katalog jako 
 ```bash
 git config --global --add safe.directory /srv/projekt/zerorisk
 ```
+
+**5. Certyfikat HTTPS (Let's Encrypt).** Bez niego kontener `frontend` nie wystartuje, więc ten krok robimy przed pierwszym wdrożeniem. Certbot działa na hoście w trybie *standalone*: na czas wystawienia i odnowienia zatrzymuje kontener `frontend`, żeby zająć port 80 (kilka sekund przerwy co ok. 60 dni).
+
+```bash
+sudo apt-get install -y certbot
+DOMAIN=zerorisk.westeurope.cloudapp.azure.com   # Twoja domena z kroku 3
+sudo certbot certonly --standalone -d "$DOMAIN" \
+  --agree-tos --no-eff-email -m <e-mail-do-powiadomień> \
+  --pre-hook "cd /srv/projekt/zerorisk && docker compose stop frontend" \
+  --post-hook "cd /srv/projekt/zerorisk && docker compose start frontend"
+sudo certbot renew --dry-run    # test odnowienia
+```
+
+Certbot zapamiętuje hooki w `/etc/letsencrypt/renewal/` i odnawia certyfikat sam (`systemctl list-timers certbot.timer`). Kontener czyta certyfikaty z `/etc/letsencrypt` hosta. HTTP przekierowuje na HTTPS, a Django przy `DJANGO_DEBUG=0` wysyła ciasteczka sesji i CSRF tylko po HTTPS.
 
 ### Wdrożenie
 
@@ -124,7 +140,3 @@ docker image prune -f                 # usunięcie starych obrazów po wdrożeni
 ```
 
 Kontenery wstają same po restarcie serwera (`restart: unless-stopped`).
-
-## Do zrobienia później
-
-- **HTTPS** – potrzebna nazwa domeny. Na Azure można za darmo ustawić etykietę DNS maszyny (`<nazwa>.<region>.cloudapp.azure.com`) i wystawić dla niej certyfikat Let's Encrypt. Po włączeniu HTTPS dopisać do `.env` adresy `https://`, a w ustawieniach Django włączyć `SESSION_COOKIE_SECURE` i `CSRF_COOKIE_SECURE`.
