@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.db import transaction
@@ -8,6 +9,16 @@ from wallet.services import open_wallet
 from .models import User
 
 DUPLICATE_EMAIL = 'A user with that e-mail address already exists.'
+INVALID_CREDENTIALS = 'Invalid login or password.'
+
+
+class PlayerSerializer(serializers.ModelSerializer):
+    balance = serializers.IntegerField(source='wallet.balance', read_only=True)
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'display_name', 'balance']
+        read_only_fields = fields
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -37,3 +48,22 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         open_wallet(user)
         return user
+
+
+class LoginSerializer(serializers.Serializer):
+    login = serializers.CharField(help_text='Username or e-mail address.')
+    password = serializers.CharField(trim_whitespace=False, style={'input_type': 'password'})
+
+    def validate(self, attrs):
+        login = attrs['login']
+        account = (
+            User.objects.filter(username=login).first()
+            or User.objects.filter(email__iexact=login).first()
+        )
+        user = account and authenticate(
+            self.context['request'], username=account.username, password=attrs['password'],
+        )
+        if not user:
+            raise serializers.ValidationError(INVALID_CREDENTIALS)
+        attrs['user'] = user
+        return attrs
