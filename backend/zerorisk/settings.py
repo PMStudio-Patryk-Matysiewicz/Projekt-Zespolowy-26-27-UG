@@ -43,6 +43,10 @@ CSRF_TRUSTED_ORIGINS = env_list('DJANGO_CSRF_TRUSTED_ORIGINS')
 # Na produkcji przed Django stoi nginx i to on mówi, czy żądanie przyszło po HTTPS.
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+# Produkcja działa tylko po HTTPS; lokalnie (DEBUG) jest HTTP, więc tam bez flagi Secure.
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+
 
 # Application definition
 
