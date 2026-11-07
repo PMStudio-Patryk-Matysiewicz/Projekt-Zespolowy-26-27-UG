@@ -20,3 +20,5 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.display_name or self.username
+
+    Celowy Błąd
