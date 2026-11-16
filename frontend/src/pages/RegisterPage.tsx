@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router'
+import { Link, Navigate } from 'react-router'
 
-import { register } from '../api/auth'
 import { toFormErrors } from '../api/errors'
+import { useAuth } from '../auth/AuthContext'
 import AuthLayout from '../components/auth/AuthLayout'
 import TextField from '../components/form/TextField'
 import Button from '../components/ui/Button'
@@ -19,7 +19,7 @@ import styles from './RegisterPage.module.css'
 type FieldErrors = Partial<Record<RegisterField, string>>
 
 export default function RegisterPage() {
-  const navigate = useNavigate()
+  const auth = useAuth()
   const formRef = useRef<HTMLFormElement>(null)
   const [values, setValues] = useState<RegisterValues>(emptyRegisterValues)
   const [errors, setErrors] = useState<FieldErrors>({})
@@ -32,6 +32,9 @@ export default function RegisterPage() {
     if (focusRequest === 0) return
     formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus()
   }, [focusRequest])
+
+  // Already logged in (also right after a successful sign-up): the lobby is the place to be.
+  if (auth.status === 'authenticated') return <Navigate to="/lobby" replace />
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, type, value, checked } = event.target
@@ -55,13 +58,12 @@ export default function RegisterPage() {
 
     setSubmitting(true)
     try {
-      await register({
+      await auth.register({
         username: values.username.trim(),
         email: values.email.trim(),
         display_name: values.display_name.trim(),
         password: values.password,
       })
-      navigate('/lobby')
     } catch (error) {
       const serverErrors = toFormErrors(error, registerFields)
       setErrors(serverErrors.fields)

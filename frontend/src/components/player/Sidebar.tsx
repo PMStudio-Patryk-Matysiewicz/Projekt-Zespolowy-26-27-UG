@@ -1,7 +1,7 @@
 import type { ComponentType } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router'
 
-import { api } from '../../api/client'
+import { useAuth } from '../../auth/AuthContext'
 import { games } from '../../games'
 import {
   ClockIcon,
@@ -32,14 +32,17 @@ const linkClass = ({ isActive }: { isActive: boolean }) =>
 
 export default function Sidebar() {
   const navigate = useNavigate()
+  const { logOut } = useAuth()
 
-  async function logOut() {
+  // Leave the player pages first; otherwise ProtectedRoute would send us to the login page
+  // as soon as the session is gone.
+  async function handleLogOut() {
+    await navigate('/')
     try {
-      await api.post('/api/auth/logout')
+      await logOut()
     } catch {
-      // No session or no endpoint yet: the player still leaves the player pages.
+      // Request failed: the app forgets the player anyway (see AuthProvider.logOut).
     }
-    navigate('/')
   }
 
   return (
@@ -102,7 +105,7 @@ export default function Sidebar() {
           </p>
           <p className={styles.noteText}>Grasz wyłącznie wirtualnymi żetonami.</p>
         </div>
-        <button type="button" className={styles.link} onClick={logOut}>
+        <button type="button" className={styles.link} onClick={handleLogOut}>
           <LogoutIcon className={styles.icon} />
           Wyloguj się
         </button>
