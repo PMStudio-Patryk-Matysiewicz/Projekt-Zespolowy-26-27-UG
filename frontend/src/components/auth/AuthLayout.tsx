@@ -6,8 +6,18 @@ import styles from './AuthLayout.module.css'
 
 const perks = ['Start z pulą 5 000 żetonów', 'Bonus dzienny za każdy powrót', 'Ranking graczy liczony z salda i wygranych']
 
+type AuthLayoutProps = {
+  children: ReactNode
+  headline?: string
+  lead?: string
+}
+
 // Split screen for sign-up and log-in: a green showcase on the left, the form on the right.
-export default function AuthLayout({ children }: { children: ReactNode }) {
+export default function AuthLayout({
+  children,
+  headline = 'Graj dla emocji, nie dla pieniędzy.',
+  lead = 'Blackjack, makao i wyścigi konne z botami AI. Bez wpłat, bez wypłat i bez ryzyka finansowego.',
+}: AuthLayoutProps) {
   return (
     <div className={styles.layout}>
       <aside className={styles.showcase}>
@@ -37,10 +47,8 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         </div>
 
         <div className={styles.copy}>
-          <p className={styles.headline}>Graj dla emocji, nie dla pieniędzy.</p>
-          <p className={styles.lead}>
-            Blackjack, makao i wyścigi konne z botami AI. Bez wpłat, bez wypłat i bez ryzyka finansowego.
-          </p>
+          <p className={styles.headline}>{headline}</p>
+          <p className={styles.lead}>{lead}</p>
           <ul className={styles.perks}>
             {perks.map((perk) => (
               <li key={perk}>

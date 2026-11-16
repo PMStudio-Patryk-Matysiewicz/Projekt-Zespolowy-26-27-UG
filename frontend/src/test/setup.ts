@@ -1,7 +1,10 @@
 import '@testing-library/jest-dom/vitest'
 import { cleanup } from '@testing-library/react'
-import { afterEach } from 'vitest'
+import { afterEach, vi } from 'vitest'
 
 afterEach(() => {
   cleanup()
+  // Undo fakeApi / vi.stubGlobal('fetch') and forget the CSRF cookie between tests.
+  vi.unstubAllGlobals()
+  document.cookie = 'csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 GMT'
 })

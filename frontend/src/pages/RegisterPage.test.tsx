@@ -1,13 +1,8 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
+import { fakeApi, json, player } from '../test/fakeApi'
 import { renderRoute } from '../test/renderRoute'
-
-const fetchMock = vi.fn<typeof fetch>()
-
-function json(body: unknown, status = 200) {
-  return new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } })
-}
 
 function fill(label: string, value: string) {
   fireEvent.change(screen.getByLabelText(label), { target: { value } })
@@ -26,36 +21,14 @@ function submit() {
   fireEvent.click(screen.getByRole('button', { name: /Załóż konto i odbierz/ }))
 }
 
-// Answers the CSRF request and GET /api/wallet (lobby after sign-up); the register call is up to the test.
-function mockApi(registerResponse: () => Promise<Response>) {
-  fetchMock.mockImplementation(async (input) => {
-    const url = String(input)
-    if (url === '/api/auth/csrf') {
-      document.cookie = 'csrftoken=test-token'
-      return new Response(null, { status: 204 })
-    }
-    if (url === '/api/auth/register') return registerResponse()
-    if (url === '/api/wallet') return json({ balance: 5000 })
-    return new Response(null, { status: 404 })
-  })
+// Fake API (anonymous visitor) where the answer to POST /api/auth/register is up to the test.
+function mockApi(registerResponse: () => Promise<Response> = async () => json(player, 201)) {
+  return fakeApi({ handlers: { '/api/auth/register': registerResponse } })
 }
-
-function registerCalls() {
-  return fetchMock.mock.calls.filter(([url]) => url === '/api/auth/register')
-}
-
-beforeEach(() => {
-  vi.stubGlobal('fetch', fetchMock)
-})
-
-afterEach(() => {
-  fetchMock.mockReset()
-  vi.unstubAllGlobals()
-  document.cookie = 'csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 GMT'
-})
 
 describe('RegisterPage', () => {
   it('shows the sign-up form', async () => {
+    mockApi()
     renderRoute('/rejestracja')
 
     expect(await screen.findByRole('heading', { level: 1, name: 'Załóż konto' })).toBeInTheDocument()
@@ -63,6 +36,7 @@ describe('RegisterPage', () => {
   })
 
   it('validates the form without calling the API', async () => {
+    const api = mockApi()
     renderRoute('/rejestracja')
     await screen.findByRole('heading', { name: 'Załóż konto' })
 
@@ -75,10 +49,11 @@ describe('RegisterPage', () => {
     expect(screen.getByText('Musisz potwierdzić wiek i zaakceptować regulamin.')).toBeInTheDocument()
     expect(screen.getByLabelText('Nazwa użytkownika')).toHaveAttribute('aria-invalid', 'true')
     expect(screen.getByLabelText('Nazwa użytkownika')).toHaveFocus()
-    expect(fetchMock).not.toHaveBeenCalled()
+    expect(api.callsTo('/api/auth/register')).toHaveLength(0)
   })
 
   it('hides a field error once the player edits the field', async () => {
+    mockApi()
     renderRoute('/rejestracja')
     await screen.findByRole('heading', { name: 'Załóż konto' })
 
@@ -89,7 +64,7 @@ describe('RegisterPage', () => {
   })
 
   it('sends the form and opens the lobby after a successful sign-up', async () => {
-    mockApi(async () => json({ id: 1, username: 'kamil_g' }, 201))
+    const api = mockApi(async () => json({ id: 1, username: 'kamil_g' }, 201))
     renderRoute('/rejestracja')
     await screen.findByRole('heading', { name: 'Załóż konto' })
 
@@ -97,7 +72,7 @@ describe('RegisterPage', () => {
     submit()
 
     expect(await screen.findByRole('heading', { name: 'Lobby' })).toBeInTheDocument()
-    const [, init] = registerCalls()[0]
+    const [, init] = api.callsTo('/api/auth/register')[0]
     expect(JSON.parse(String(init!.body))).toEqual({
       username: 'kamil_g',
       email: 'kamil@przyklad.pl',
@@ -148,7 +123,7 @@ describe('RegisterPage', () => {
 
   it('blocks the form while the request is in progress', async () => {
     let finish!: (response: Response) => void
-    mockApi(() => new Promise((resolve) => (finish = resolve)))
+    const api = mockApi(() => new Promise((resolve) => (finish = resolve)))
     renderRoute('/rejestracja')
     await screen.findByRole('heading', { name: 'Załóż konto' })
 
@@ -158,9 +133,17 @@ describe('RegisterPage', () => {
     const button = await screen.findByRole('button', { name: 'Zakładanie konta…' })
     expect(button).toBeDisabled()
     fireEvent.click(button)
-    await waitFor(() => expect(registerCalls()).toHaveLength(1))
+    await waitFor(() => expect(api.callsTo('/api/auth/register')).toHaveLength(1))
 
     finish(json({ id: 1 }, 201))
     expect(await screen.findByRole('heading', { name: 'Lobby' })).toBeInTheDocument()
+  })
+
+  it('sends a player who is already logged in to the lobby', async () => {
+    fakeApi({ loggedIn: true })
+    const { router } = renderRoute('/rejestracja')
+
+    expect(await screen.findByRole('heading', { name: 'Lobby' })).toBeInTheDocument()
+    expect(router.state.location.pathname).toBe('/lobby')
   })
 })

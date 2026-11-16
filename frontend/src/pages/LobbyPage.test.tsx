@@ -1,45 +1,42 @@
 import { screen, within } from '@testing-library/react'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
+import { fakeApi, json, type Handlers } from '../test/fakeApi'
 import { renderRoute } from '../test/renderRoute'
 
-const fetchMock = vi.fn<typeof fetch>()
-
-function walletResponse(balance: number) {
-  return new Response(JSON.stringify({ balance }), { status: 200 })
+// The lobby needs a logged-in player; fakeApi's player has 12 450 chips.
+async function openLobby(handlers?: Handlers) {
+  const api = fakeApi({ loggedIn: true, handlers })
+  renderRoute('/lobby')
+  await screen.findByRole('heading', { name: 'Lobby' })
+  return api
 }
-
-beforeEach(() => {
-  vi.stubGlobal('fetch', fetchMock)
-})
-
-afterEach(() => {
-  fetchMock.mockReset()
-  vi.unstubAllGlobals()
-})
 
 describe('LobbyPage', () => {
   it('shows the balance from GET /api/wallet in the top bar', async () => {
-    fetchMock.mockResolvedValue(walletResponse(12450))
-    renderRoute('/lobby')
+    const api = await openLobby({ '/api/wallet': () => json({ balance: 32000 }) })
 
     const topBar = screen.getByRole('banner')
-    expect(await within(topBar).findByText('12 450')).toBeInTheDocument()
-    expect(fetchMock).toHaveBeenCalledWith('/api/wallet', expect.anything())
+    expect(await within(topBar).findByText('32 000')).toBeInTheDocument()
+    expect(api.callsTo('/api/wallet')).toHaveLength(1)
+  })
+
+  it('greets the player by name', async () => {
+    await openLobby()
+
+    expect(within(screen.getByRole('banner')).getByText('Cześć, Kamil!')).toBeInTheDocument()
   })
 
   it('shows a dash when the balance cannot be loaded', async () => {
-    fetchMock.mockResolvedValue(new Response('', { status: 404 }))
-    renderRoute('/lobby')
+    await openLobby({ '/api/wallet': () => new Response('', { status: 404 }) })
 
     expect(await within(screen.getByRole('banner')).findByText('—')).toBeInTheDocument()
   })
 
   it('shows three game cards marked as coming soon', async () => {
-    fetchMock.mockResolvedValue(walletResponse(0))
-    renderRoute('/lobby')
+    await openLobby()
 
-    const cards = await screen.findAllByRole('article')
+    const cards = screen.getAllByRole('article')
     expect(cards.map((card) => within(card).getByRole('heading', { level: 3 }).textContent)).toEqual([
       'Blackjack',
       'Makao',
@@ -52,10 +49,9 @@ describe('LobbyPage', () => {
   })
 
   it('links the sidebar to wallet, history, profile and ranking', async () => {
-    fetchMock.mockResolvedValue(walletResponse(0))
-    renderRoute('/lobby')
+    await openLobby()
 
-    const menu = await screen.findByRole('navigation', { name: 'Menu gracza' })
+    const menu = screen.getByRole('navigation', { name: 'Menu gracza' })
     expect(within(menu).getByRole('link', { name: 'Portfel' })).toHaveAttribute('href', '/portfel')
     expect(within(menu).getByRole('link', { name: 'Historia gier' })).toHaveAttribute('href', '/historia')
     expect(within(menu).getByRole('link', { name: 'Profil' })).toHaveAttribute('href', '/profil')
@@ -64,6 +60,7 @@ describe('LobbyPage', () => {
   })
 
   it('shows the not found page for account pages that do not exist yet', async () => {
+    fakeApi({ loggedIn: true })
     renderRoute('/portfel')
 
     expect(await screen.findByRole('heading', { name: 'Nie znaleziono strony' })).toBeInTheDocument()

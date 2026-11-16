@@ -1,3 +1,4 @@
+import { useAuth } from '../../auth/AuthContext'
 import { useWallet, type WalletState } from '../../hooks/useWallet'
 import { CoinIcon, UserIcon } from '../icons'
 import styles from './TopBar.module.css'
@@ -12,11 +13,13 @@ function balanceText(wallet: WalletState) {
 
 export default function TopBar() {
   const wallet = useWallet()
+  const auth = useAuth()
+  const name = auth.status === 'authenticated' ? auth.player.display_name || auth.player.username : undefined
 
   return (
     <header className={styles.topBar}>
       <div>
-        <p className={styles.greeting}>Cześć!</p>
+        <p className={styles.greeting}>{name ? `Cześć, ${name}!` : 'Cześć!'}</p>
         <p className={styles.subtitle}>Wybierz grę i graj bez ryzyka</p>
       </div>
 
