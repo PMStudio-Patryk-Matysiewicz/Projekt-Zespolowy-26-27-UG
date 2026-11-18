@@ -104,11 +104,11 @@ git config --global --add safe.directory /srv/projekt/zerorisk
 
 ```bash
 sudo apt-get install -y certbot
-DOMAIN=zerorisk.westeurope.cloudapp.azure.com   # Twoja domena z kroku 3
+DOMAIN=zerorisk.swedencentral.cloudapp.azure.com   # Twoja domena z kroku 3
 sudo certbot certonly --standalone -d "$DOMAIN" \
   --agree-tos --no-eff-email -m <e-mail-do-powiadomień> \
-  --pre-hook "cd /srv/projekt/zerorisk && docker compose stop frontend" \
-  --post-hook "cd /srv/projekt/zerorisk && docker compose start frontend"
+  --pre-hook "sh -c 'cd /srv/projekt/zerorisk && docker compose stop frontend'" \
+  --post-hook "sh -c 'cd /srv/projekt/zerorisk && docker compose start frontend'"
 sudo certbot renew --dry-run    # test odnowienia
 ```
 
