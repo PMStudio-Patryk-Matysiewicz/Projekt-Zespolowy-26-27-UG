@@ -1,0 +1,14 @@
+import { useEffect, useState } from 'react'
+
+// Current time in ms, refreshed every `intervalMs`, for countdowns and "today".
+// Kept in state, so rendering stays pure (no Date.now() during render).
+export function useNow(intervalMs = 60_000): number {
+  const [now, setNow] = useState(() => Date.now())
+
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), intervalMs)
+    return () => clearInterval(id)
+  }, [intervalMs])
+
+  return now
+}

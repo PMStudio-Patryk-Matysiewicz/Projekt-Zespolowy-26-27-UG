@@ -5,11 +5,13 @@ import ProtectedRoute, { LOGIN_PATH } from './auth/ProtectedRoute'
 import PlayerLayout from './components/player/PlayerLayout'
 import BlackjackSetupPage from './pages/BlackjackSetupPage'
 import BlackjackTablePage from './pages/BlackjackTablePage'
+import type { PageHandle } from './components/player/TopBar'
 import HomePage from './pages/HomePage'
 import LobbyPage from './pages/LobbyPage'
 import LoginPage from './pages/LoginPage'
 import NotFoundPage from './pages/NotFoundPage'
 import RegisterPage from './pages/RegisterPage'
+import WalletPage from './pages/WalletPage'
 
 // One list of routes for the app (createBrowserRouter) and tests (createMemoryRouter).
 export const routes: RouteObject[] = [
@@ -32,6 +34,11 @@ export const routes: RouteObject[] = [
             children: [
               { path: 'lobby', Component: LobbyPage },
               { path: 'gry/blackjack', Component: BlackjackSetupPage },
+              {
+                path: 'portfel',
+                Component: WalletPage,
+                handle: { title: 'Portfel', subtitle: 'Saldo, bonus dzienny i historia transakcji' } satisfies PageHandle,
+              },
             ],
           },
           // The table fills the whole screen: no sidebar.
