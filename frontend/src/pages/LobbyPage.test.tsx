@@ -61,7 +61,7 @@ describe('LobbyPage', () => {
 
   it('shows the not found page for account pages that do not exist yet', async () => {
     fakeApi({ loggedIn: true })
-    renderRoute('/portfel')
+    renderRoute('/profil')
 
     expect(await screen.findByRole('heading', { name: 'Nie znaleziono strony' })).toBeInTheDocument()
   })
