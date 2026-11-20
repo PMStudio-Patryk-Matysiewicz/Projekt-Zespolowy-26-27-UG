@@ -31,7 +31,7 @@ describe('BlackjackSetupPage', () => {
     expect(screen.getByText('Ty (miejsce 5)')).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: 'Usiądź przy stole' }))
 
-    expect(await screen.findByText('Miejsce 5', { selector: 'li' })).toBeInTheDocument()
+    expect(await screen.findByText('Miejsce 5', { selector: 'li span' })).toBeInTheDocument()
     expect(router.state.location.pathname).toBe('/gry/blackjack/stol')
     const [, init] = api.callsTo('/api/blackjack/table').find(([, init]) => init?.method === 'POST')!
     expect(JSON.parse(String(init!.body))).toEqual({ seat: 5 })

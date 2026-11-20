@@ -1,10 +1,10 @@
-import { Link } from 'react-router'
-
 import type { BlackjackTable } from '../../api/blackjack'
 import { SHUFFLE_AT } from '../../api/blackjack'
 import { shoeDealt } from '../../blackjack'
 import { formatChips } from '../../format'
 import { ArrowLeftIcon, CoinIcon, SpadeIcon } from '../icons'
+import Badge from '../ui/Badge'
+import Button from '../ui/Button'
 import styles from './TableHeader.module.css'
 
 type TableHeaderProps = {
@@ -19,18 +19,26 @@ export default function TableHeader({ table, onLeave, canLeave }: TableHeaderPro
   return (
     <header className={styles.header}>
       <div className={styles.left}>
-        <Link to="/lobby" className={styles.back}>
+        <Button to="/lobby" variant="secondary" size="small">
           <ArrowLeftIcon className={styles.backIcon} />
           Lobby
-        </Link>
+        </Button>
         <h1 className={styles.title}>
           <SpadeIcon className={styles.titleIcon} />
           Blackjack
         </h1>
         <ul className={styles.tags}>
-          <li className={styles.tag}>Stół #{table.id}</li>
-          <li className={`${styles.tag} ${styles.tagBlue}`}>Runda {table.round_no}</li>
-          <li className={styles.tag}>Miejsce {table.seat}</li>
+          <li>
+            <Badge dot={false}>Stół #{table.id}</Badge>
+          </li>
+          <li>
+            <Badge tone="blue" dot={false}>
+              Runda {table.round_no}
+            </Badge>
+          </li>
+          <li>
+            <Badge dot={false}>Miejsce {table.seat}</Badge>
+          </li>
         </ul>
       </div>
 
@@ -58,15 +66,15 @@ export default function TableHeader({ table, onLeave, canLeave }: TableHeaderPro
           <span className={styles.unit}>żetonów</span>
         </p>
 
-        <button
-          type="button"
-          className={styles.leave}
+        <Button
+          variant="secondary"
+          size="small"
           onClick={onLeave}
           disabled={!canLeave}
           title={canLeave ? undefined : 'Od stołu można odejść po zakończeniu rundy'}
         >
           Odejdź od stołu
-        </button>
+        </Button>
       </div>
     </header>
   )
