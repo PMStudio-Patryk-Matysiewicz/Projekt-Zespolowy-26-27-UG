@@ -1,0 +1,153 @@
+.fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.hint {
+  margin: 0.25rem 0 1rem;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+}
+
+/* Half-round table: dealer at the top, seats along the curved edge. */
+.table {
+  position: relative;
+  height: 17rem;
+}
+
+.felt {
+  position: absolute;
+  inset: 0 4% 28% 4%;
+  border: 2px solid rgb(227 179 65 / 30%);
+  border-top: 0;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  background: radial-gradient(ellipse at 50% 0%, var(--color-felt) 0%, var(--color-felt-dark) 75%);
+}
+
+.dealer {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgb(238 243 240 / 55%);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.seat {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+/* Along the arc, seat 1 on the player's left. */
+.seat1 {
+  top: 34%;
+  left: 7%;
+}
+
+.seat2 {
+  top: 66%;
+  left: 27%;
+}
+
+.seat3 {
+  top: 80%;
+  left: 50%;
+}
+
+.seat4 {
+  top: 66%;
+  left: 73%;
+}
+
+.seat5 {
+  top: 34%;
+  left: 93%;
+}
+
+.radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.circle {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 2px dashed rgb(238 243 240 / 35%);
+  border-radius: 50%;
+  background: var(--color-bg);
+  color: var(--color-muted);
+  font-weight: 700;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.seat:hover .circle {
+  border-color: var(--color-accent);
+}
+
+.radio:focus-visible + .circle {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.chosen .circle {
+  border: 2px solid var(--color-accent);
+  background: var(--color-accent);
+  box-shadow: 0 0 0 6px rgb(61 220 132 / 18%);
+  color: var(--color-on-accent);
+}
+
+.seatLabel {
+  color: var(--color-muted);
+  font-size: 0.6875rem;
+  white-space: nowrap;
+}
+
+.chosen .seatLabel {
+  color: var(--color-text);
+}
+
+.you {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.fieldset:disabled .seat {
+  cursor: progress;
+}
+
+@media (max-width: 520px) {
+  .seatLabel {
+    font-size: 0;
+  }
+
+  .seatLabel .you {
+    display: block;
+    font-size: 0.6875rem;
+  }
+
+  .circle {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}

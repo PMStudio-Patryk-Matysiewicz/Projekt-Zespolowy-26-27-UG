@@ -1,0 +1,26 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.center {
+  display: grid;
+  place-items: center;
+  min-height: 60vh;
+  color: var(--color-muted);
+}
+
+.controls {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.error {
+  margin: 0;
+  padding: 0.6rem 1.5rem;
+  border-bottom: 1px solid rgb(229 87 79 / 30%);
+  background: rgb(229 87 79 / 10%);
+  color: #f07a73;
+  font-size: 0.8125rem;
+}
