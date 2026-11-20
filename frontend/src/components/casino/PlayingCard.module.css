@@ -1,0 +1,75 @@
+.card {
+  --w: 64px;
+
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: var(--w);
+  aspect-ratio: 5 / 7;
+  border-radius: calc(var(--w) * 0.1);
+  background: #f7f6f1;
+  box-shadow: 0 6px 16px rgb(0 0 0 / 35%);
+  font-family: system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  user-select: none;
+}
+
+.small {
+  --w: 44px;
+}
+
+.medium {
+  --w: 64px;
+}
+
+.large {
+  --w: 88px;
+}
+
+.red {
+  color: #d62e3a;
+}
+
+.black {
+  color: #16181a;
+}
+
+.corner {
+  position: absolute;
+  top: 7%;
+  left: 9%;
+  font-size: calc(var(--w) * 0.26);
+  letter-spacing: -0.04em;
+}
+
+.pip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -45%);
+  font-size: calc(var(--w) * 0.5);
+}
+
+.cornerSuit {
+  position: absolute;
+  right: 8%;
+  bottom: 5%;
+  font-size: calc(var(--w) * 0.2);
+}
+
+.back {
+  display: inline-grid;
+  place-items: center;
+  border: calc(var(--w) * 0.05) solid #f7f6f1;
+  background:
+    repeating-linear-gradient(45deg, rgb(255 255 255 / 4%) 0 4px, transparent 4px 8px),
+    #1a6243;
+}
+
+.backMark {
+  width: 42%;
+  height: auto;
+  color: var(--color-accent);
+}
