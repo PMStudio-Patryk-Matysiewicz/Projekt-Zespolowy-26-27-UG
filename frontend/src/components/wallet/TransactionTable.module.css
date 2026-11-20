@@ -104,45 +104,6 @@ td.after {
   font-weight: 400;
 }
 
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.15rem 0.55rem;
-  border-radius: 6px;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.badge::before {
-  content: '';
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: currentcolor;
-}
-
-.win {
-  background: var(--color-accent-soft);
-  color: var(--color-accent);
-}
-
-.bet {
-  background: rgb(255 255 255 / 6%);
-  color: var(--color-muted);
-}
-
-.bonus {
-  background: rgb(227 179 65 / 14%);
-  color: var(--color-gold);
-}
-
-.info {
-  background: rgb(91 156 245 / 14%);
-  color: #7fb0f7;
-}
-
 .message {
   margin: 0;
   padding: 2rem 1rem;

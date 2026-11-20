@@ -1,16 +1,17 @@
 import type { DailyBonus, Transaction, TransactionType } from './api/wallet'
+import type { BadgeTone } from './components/ui/Badge'
 
-// How each transaction type looks in the table.
-export const transactionKinds: Record<TransactionType, { label: string; tone: 'win' | 'bet' | 'bonus' | 'info' }> = {
-  win: { label: 'Wygrana', tone: 'win' },
-  bet: { label: 'Zakład', tone: 'bet' },
-  bonus: { label: 'Bonus', tone: 'bonus' },
-  refund: { label: 'Zwrot', tone: 'info' },
-  starting_pool: { label: 'Start', tone: 'info' },
+// How each transaction type looks in the table (label and Badge tone).
+export const transactionKinds: Record<TransactionType, { label: string; tone: BadgeTone }> = {
+  win: { label: 'Wygrana', tone: 'green' },
+  bet: { label: 'Zakład', tone: 'neutral' },
+  bonus: { label: 'Bonus', tone: 'gold' },
+  refund: { label: 'Zwrot', tone: 'blue' },
+  starting_pool: { label: 'Start', tone: 'blue' },
 }
 
 export function transactionKind(type: string) {
-  return transactionKinds[type as TransactionType] ?? { label: 'Inne', tone: 'bet' as const }
+  return transactionKinds[type as TransactionType] ?? { label: 'Inne', tone: 'neutral' as const }
 }
 
 // Filter buttons above the table.
