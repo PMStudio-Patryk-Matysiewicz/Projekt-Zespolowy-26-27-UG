@@ -3,6 +3,7 @@ import { formatChips, formatDayMonth, formatDuration, formatSignedChips, formatT
 import type { ApiData } from '../../hooks/useApiData'
 import type { WalletState } from '../../hooks/useWallet'
 import { bonusStatus, isSameDay, weekResult } from '../../wallet'
+import Badge from '../ui/Badge'
 import styles from './WalletCards.module.css'
 
 type WalletCardsProps = {
@@ -53,8 +54,8 @@ function BonusCard({ bonus, now }: { bonus: ApiData<DailyBonus>; now: number }) 
         <h2 id="bonus-title" className={styles.title}>
           Bonus dzienny
         </h2>
-        {status?.state === 'claimed' && <span className={`${styles.badge} ${styles.badgeDone}`}>Odebrany</span>}
-        {status?.state === 'available' && <span className={`${styles.badge} ${styles.badgeReady}`}>Do odebrania</span>}
+        {status?.state === 'claimed' && <Badge tone="green">Odebrany</Badge>}
+        {status?.state === 'available' && <Badge tone="gold">Do odebrania</Badge>}
       </div>
 
       {bonus.status === 'loading' && <p className={styles.value}>…</p>}

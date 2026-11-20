@@ -2,6 +2,7 @@ import type { Transaction } from '../../api/wallet'
 import { formatChips, formatDateTime, formatSignedChips } from '../../format'
 import type { ApiData } from '../../hooks/useApiData'
 import { filterTransactions, transactionFilters, transactionKind, type TransactionFilter } from '../../wallet'
+import Badge from '../ui/Badge'
 import styles from './TransactionTable.module.css'
 
 type TransactionTableProps = {
@@ -73,7 +74,7 @@ export default function TransactionTable({ transactions, filter, onFilterChange,
                 <tr key={t.id}>
                   <td className={styles.date}>{formatDateTime(new Date(t.created_at))}</td>
                   <td>
-                    <span className={`${styles.badge} ${styles[kind.tone]}`}>{kind.label}</span>
+                    <Badge tone={kind.tone}>{kind.label}</Badge>
                   </td>
                   <td>{t.description || kind.label}</td>
                   <td className={`${styles.numeric} ${t.amount > 0 ? styles.plus : ''}`}>
