@@ -81,14 +81,9 @@
   cursor: default;
 }
 
+/* The "wkrótce" badge goes to the right edge of the menu item. */
 .soon {
   margin-left: auto;
-  padding: 0.05rem 0.4rem;
-  border: 1px solid var(--color-border);
-  border-radius: 999px;
-  font-size: 0.625rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
 
 .icon {

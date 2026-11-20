@@ -1,8 +1,8 @@
-import { Link } from 'react-router'
-
+import { CheckIcon } from '../icons'
+import Badge from '../ui/Badge'
+import Button from '../ui/Button'
 import styles from './Hero.module.css'
 import HeroTable from './HeroTable'
-import { CheckIcon } from '../icons'
 
 const perks = ['Bez wpłat', 'Legalnie', 'Boty AI zamiast graczy']
 
@@ -10,10 +10,9 @@ export default function Hero() {
   return (
     <section className={styles.hero}>
       <div className={styles.copy}>
-        <span className={styles.badge}>
-          <span className={styles.badgeDot} aria-hidden="true" />
+        <Badge tone="green" size="medium">
           100% wirtualne żetony
-        </span>
+        </Badge>
 
         <h1 className={styles.title}>
           Emocje kasyna. <span className={styles.titleAccent}>Zero ryzyka.</span>
@@ -25,12 +24,12 @@ export default function Hero() {
         </p>
 
         <div className={styles.actions}>
-          <Link to="/rejestracja" className={styles.primary}>
+          <Button to="/rejestracja" size="large">
             Odbierz 5&nbsp;000 żetonów na start
-          </Link>
-          <Link to="/ranking" className={styles.secondary}>
+          </Button>
+          <Button to="/ranking" variant="secondary" size="large">
             Zobacz ranking
-          </Link>
+          </Button>
         </div>
 
         <ul className={styles.perks}>

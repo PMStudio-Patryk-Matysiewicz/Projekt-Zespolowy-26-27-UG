@@ -13,6 +13,7 @@ import {
   UserIcon,
   WalletIcon,
 } from '../icons'
+import Badge from '../ui/Badge'
 import { gameIcons } from './gameIcons'
 import styles from './Sidebar.module.css'
 
@@ -70,7 +71,9 @@ export default function Sidebar() {
                   <span className={`${styles.link} ${styles.disabled}`} aria-disabled="true">
                     <Icon className={styles.icon} />
                     {game.name}
-                    <span className={styles.soon}>wkrótce</span>
+                    <Badge dot={false} className={styles.soon}>
+                      wkrótce
+                    </Badge>
                   </span>
                 )}
               </li>
