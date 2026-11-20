@@ -1,0 +1,63 @@
+.chip {
+  --size: 48px;
+
+  display: inline-grid;
+  flex-shrink: 0;
+  place-items: center;
+  box-sizing: border-box;
+  width: var(--size);
+  height: var(--size);
+  padding: 0;
+  border: calc(var(--size) * 0.09) dashed rgb(255 255 255 / 80%);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 calc(var(--size) * 0.06) rgb(0 0 0 / 15%),
+    0 3px 8px rgb(0 0 0 / 40%);
+  color: #10231a;
+  font: inherit;
+  font-size: calc(var(--size) * 0.27);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.small {
+  --size: 30px;
+}
+
+.medium {
+  --size: 48px;
+}
+
+.blue {
+  background: #5b9cf5;
+}
+
+.green {
+  background: #3ddc84;
+}
+
+.gold {
+  background: #f2bf3c;
+}
+
+.red {
+  background: #ef5b4c;
+}
+
+.grey {
+  background: #b8c2bd;
+}
+
+button.chip {
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+button.chip:hover:not(:disabled) {
+  transform: translateY(-3px);
+}
+
+button.chip:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
