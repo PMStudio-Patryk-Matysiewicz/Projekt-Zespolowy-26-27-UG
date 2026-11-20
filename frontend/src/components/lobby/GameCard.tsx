@@ -1,6 +1,6 @@
-import { Link } from 'react-router'
-
 import type { Game } from '../../games'
+import Badge from '../ui/Badge'
+import Button from '../ui/Button'
 import GameArt from './GameArt'
 import styles from './GameCard.module.css'
 
@@ -13,19 +13,19 @@ export default function GameCard({ game }: { game: Game }) {
         <p className={styles.description}>{game.description}</p>
         <ul className={styles.tags}>
           {game.tags.map(({ label, tone }) => (
-            <li key={label} className={`${styles.tag} ${styles[tone]}`}>
-              {label}
+            <li key={label}>
+              <Badge tone={tone}>{label}</Badge>
             </li>
           ))}
         </ul>
         <div className={styles.footer}>
           <span className={styles.meta}>{game.meta}</span>
           {game.available ? (
-            <Link to={game.path} className={styles.play}>
+            <Button to={game.path} size="small">
               Graj
-            </Link>
+            </Button>
           ) : (
-            <span className={styles.soon}>Wkrótce</span>
+            <Badge>Wkrótce</Badge>
           )}
         </div>
       </div>

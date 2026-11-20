@@ -5,6 +5,7 @@ import { register } from '../api/auth'
 import { toFormErrors } from '../api/errors'
 import AuthLayout from '../components/auth/AuthLayout'
 import TextField from '../components/form/TextField'
+import Button from '../components/ui/Button'
 import { GiftIcon } from '../components/icons'
 import {
   emptyRegisterValues,
@@ -134,9 +135,9 @@ export default function RegisterPage() {
           )}
         </div>
 
-        <button type="submit" className={styles.submit} disabled={submitting}>
+        <Button type="submit" size="large" fullWidth disabled={submitting}>
           {submitting ? 'Zakładanie konta…' : 'Załóż konto i odbierz 5 000 żetonów'}
-        </button>
+        </Button>
       </form>
 
       <p className={styles.footer}>

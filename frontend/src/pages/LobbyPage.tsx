@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 
 import { GiftIcon } from '../components/icons'
 import GameCard from '../components/lobby/GameCard'
+import Button from '../components/ui/Button'
 import { games } from '../games'
 import styles from './LobbyPage.module.css'
 
@@ -22,9 +23,9 @@ export default function LobbyPage() {
           </h2>
           <p className={styles.bonusDescription}>Codziennie odbierzesz +500 żetonów. Już wkrótce.</p>
         </div>
-        <button type="button" className={styles.bonusButton} disabled>
+        <Button variant="gold" disabled>
           Wkrótce
-        </button>
+        </Button>
       </section>
 
       <section aria-labelledby="games-title">

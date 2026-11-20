@@ -1,0 +1,53 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.dot::before {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentcolor;
+  content: '';
+}
+
+.small {
+  padding: 0.15rem 0.55rem;
+  font-size: 0.6875rem;
+}
+
+.medium {
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+}
+
+.neutral {
+  background: rgb(255 255 255 / 6%);
+  color: var(--color-muted);
+}
+
+.green {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.gold {
+  background: rgb(227 179 65 / 14%);
+  color: var(--color-gold);
+}
+
+.red {
+  background: rgb(229 87 79 / 14%);
+  color: #f07a73;
+}
+
+.blue {
+  background: rgb(91 156 245 / 14%);
+  color: #8ab8f8;
+}

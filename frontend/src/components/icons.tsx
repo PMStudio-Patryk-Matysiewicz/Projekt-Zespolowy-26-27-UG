@@ -31,6 +31,31 @@ export function CheckIcon({ className }: IconProps) {
   )
 }
 
+export function ChevronRightIcon({ className }: IconProps) {
+  return (
+    <svg {...common} className={className}>
+      <path d="M9 6l6 6-6 6" />
+    </svg>
+  )
+}
+
+export function InfoIcon({ className }: IconProps) {
+  return (
+    <svg {...common} className={className}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 11v5M12 8h.01" />
+    </svg>
+  )
+}
+
+export function BoltIcon({ className }: IconProps) {
+  return (
+    <svg {...common} className={className}>
+      <path d="M13 3L5 14h6l-1 7 8-11h-6l1-7z" />
+    </svg>
+  )
+}
+
 export function BotIcon({ className }: IconProps) {
   return (
     <svg {...common} className={className}>
@@ -139,6 +164,14 @@ export function CoinIcon({ className }: IconProps) {
     <svg {...common} className={className}>
       <circle cx="12" cy="12" r="8.5" />
       <circle cx="12" cy="12" r="4.5" />
+    </svg>
+  )
+}
+
+export function ArrowLeftIcon({ className }: IconProps) {
+  return (
+    <svg {...common} className={className}>
+      <path d="M19 12H5M11 6l-6 6 6 6" />
     </svg>
   )
 }
