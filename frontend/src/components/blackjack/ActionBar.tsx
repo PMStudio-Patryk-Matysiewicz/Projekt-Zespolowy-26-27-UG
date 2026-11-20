@@ -1,4 +1,5 @@
 import type { Action } from '../../api/blackjack'
+import Button from '../ui/Button'
 import styles from './Controls.module.css'
 
 const buttons: { action: Action; label: string; hint: string }[] = [
@@ -21,16 +22,17 @@ export default function ActionBar({ actions, onAction, pending }: ActionBarProps
       <p className={styles.betLabel}>Twój ruch</p>
       <div className={styles.buttons}>
         {buttons.map(({ action, label, hint }) => (
-          <button
+          <Button
             key={action}
-            type="button"
-            className={action === 'hit' ? styles.primary : styles.secondary}
+            variant={action === 'hit' ? 'primary' : 'secondary'}
+            size="large"
+            className={styles.move}
             onClick={() => onAction(action)}
             disabled={pending || !actions.includes(action)}
           >
             {label}
             <span className={styles.buttonHint}>{hint}</span>
-          </button>
+          </Button>
         ))}
       </div>
     </div>

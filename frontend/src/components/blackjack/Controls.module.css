@@ -55,55 +55,10 @@
   margin-left: auto;
 }
 
-.primary,
-.secondary,
-.ghost {
-  display: inline-flex;
+/* Move buttons show the English name under the Polish one. */
+.move {
   flex-direction: column;
-  align-items: center;
-  padding: 0.65rem 1.2rem;
-  border-radius: 10px;
-  font: inherit;
-  font-size: 0.875rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.primary {
-  border: 0;
-  background: var(--color-accent);
-  color: var(--color-on-accent);
-}
-
-.primary:hover:not(:disabled) {
-  background: var(--color-accent-strong);
-}
-
-.secondary {
-  border: 1px solid var(--color-border);
-  background: var(--color-bg);
-  color: var(--color-text);
-}
-
-.secondary:hover:not(:disabled) {
-  border-color: var(--color-accent);
-}
-
-.ghost {
-  border: 0;
-  background: transparent;
-  color: var(--color-muted);
-}
-
-.ghost:hover:not(:disabled) {
-  color: var(--color-text);
-}
-
-.primary:disabled,
-.secondary:disabled,
-.ghost:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+  gap: 0.1rem;
 }
 
 .buttonHint {

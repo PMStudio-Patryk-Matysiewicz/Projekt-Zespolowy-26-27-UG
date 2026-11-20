@@ -2,6 +2,7 @@ import type { BlackjackTable } from '../../api/blackjack'
 import { lastBaseBet } from '../../blackjack'
 import { formatChips } from '../../format'
 import Chip from '../casino/Chip'
+import Button from '../ui/Button'
 import { CHIP_VALUES } from '../casino/chipValues'
 import styles from './Controls.module.css'
 
@@ -38,17 +39,17 @@ export default function BetBar({ table, bet, onBetChange, onDeal, pending }: Bet
       <span className={styles.hint}>Kliknij żeton, aby dołożyć go do stawki</span>
 
       <div className={styles.buttons}>
-        <button type="button" className={styles.ghost} onClick={() => onBetChange(0)} disabled={pending || bet === 0}>
+        <Button variant="ghost" size="large" onClick={() => onBetChange(0)} disabled={pending || bet === 0}>
           Wyczyść
-        </button>
+        </Button>
         {repeat !== undefined && (
-          <button type="button" className={styles.secondary} onClick={() => onDeal(repeat)} disabled={pending}>
+          <Button variant="secondary" size="large" onClick={() => onDeal(repeat)} disabled={pending}>
             Powtórz {formatChips(repeat)}
-          </button>
+          </Button>
         )}
-        <button type="button" className={styles.primary} onClick={() => onDeal(bet)} disabled={pending || bet === 0}>
+        <Button size="large" onClick={() => onDeal(bet)} disabled={pending || bet === 0}>
           {pending ? 'Rozdawanie…' : 'Rozdaj karty'}
-        </button>
+        </Button>
       </div>
     </div>
   )
