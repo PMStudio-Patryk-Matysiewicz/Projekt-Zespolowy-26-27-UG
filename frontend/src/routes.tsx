@@ -3,6 +3,8 @@ import { Navigate, type RouteObject } from 'react-router'
 import App from './App'
 import ProtectedRoute, { LOGIN_PATH } from './auth/ProtectedRoute'
 import PlayerLayout from './components/player/PlayerLayout'
+import BlackjackSetupPage from './pages/BlackjackSetupPage'
+import BlackjackTablePage from './pages/BlackjackTablePage'
 import HomePage from './pages/HomePage'
 import LobbyPage from './pages/LobbyPage'
 import LoginPage from './pages/LoginPage'
@@ -27,8 +29,13 @@ export const routes: RouteObject[] = [
           {
             // They share the sidebar and the top bar with the balance.
             Component: PlayerLayout,
-            children: [{ path: 'lobby', Component: LobbyPage }],
+            children: [
+              { path: 'lobby', Component: LobbyPage },
+              { path: 'gry/blackjack', Component: BlackjackSetupPage },
+            ],
           },
+          // The table fills the whole screen: no sidebar.
+          { path: 'gry/blackjack/stol', Component: BlackjackTablePage },
         ],
       },
       { path: '*', Component: NotFoundPage },
