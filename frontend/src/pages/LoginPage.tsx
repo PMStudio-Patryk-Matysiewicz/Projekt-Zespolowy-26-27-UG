@@ -7,6 +7,7 @@ import { useAuth } from '../auth/AuthContext'
 import AuthLayout from '../components/auth/AuthLayout'
 import TextField from '../components/form/TextField'
 import { ArrowLeftIcon } from '../components/icons'
+import Button from '../components/ui/Button'
 import { emptyLoginValues, INVALID_CREDENTIALS, validateLogin, type LoginField, type LoginValues } from '../forms/loginForm'
 import styles from './LoginPage.module.css'
 
@@ -111,16 +112,16 @@ export default function LoginPage() {
           disabled={submitting}
         />
 
-        <button type="submit" className={styles.submit} disabled={submitting}>
+        <Button type="submit" size="large" fullWidth disabled={submitting}>
           {submitting ? 'Logowanie…' : 'Zaloguj się'}
-        </button>
+        </Button>
       </form>
 
       <p className={styles.divider}>albo</p>
 
-      <Link to="/ranking" className={styles.secondary}>
+      <Button to="/ranking" variant="secondary" size="large" fullWidth>
         Przeglądaj ranking jako gość
-      </Link>
+      </Button>
 
       <p className={styles.footer}>
         Nie masz konta? <Link to="/rejestracja">Załóż je za darmo</Link>

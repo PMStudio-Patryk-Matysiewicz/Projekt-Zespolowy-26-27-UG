@@ -1,4 +1,4 @@
-/* Shares the look of the sign-up form: title, fields, error box, submit and footer. */
+/* Shares the look of the sign-up form: title, fields, error box and footer. */
 @import './RegisterPage.module.css';
 
 .back {
@@ -34,21 +34,4 @@
   content: '';
   flex: 1;
   border-top: 1px solid var(--color-border);
-}
-
-.secondary {
-  display: block;
-  padding: 0.9rem 1rem;
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  background: var(--color-surface);
-  color: var(--color-text);
-  font-size: 0.875rem;
-  font-weight: 700;
-  text-align: center;
-  text-decoration: none;
-}
-
-.secondary:hover {
-  border-color: var(--color-accent);
 }
