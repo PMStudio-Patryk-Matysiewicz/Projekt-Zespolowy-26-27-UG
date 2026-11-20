@@ -7,6 +7,7 @@ import { toFormErrors } from '../api/errors'
 import { TABLE_PATH } from '../blackjack'
 import SeatPicker from '../components/blackjack/SeatPicker'
 import TableRules from '../components/blackjack/TableRules'
+import Button from '../components/ui/Button'
 import styles from './BlackjackSetupPage.module.css'
 
 type Check = 'checking' | 'open-table' | 'no-table'
@@ -84,9 +85,9 @@ export default function BlackjackSetupPage() {
               </p>
             )}
 
-            <button type="submit" className={styles.submit} disabled={submitting}>
+            <Button type="submit" size="large" fullWidth disabled={submitting}>
               {submitting ? 'Otwieranie stołu…' : 'Usiądź przy stole'}
-            </button>
+            </Button>
           </aside>
         </form>
       )}
