@@ -55,16 +55,28 @@
   margin-left: auto;
 }
 
-/* Move buttons show the English name under the Polish one. */
-.move {
-  flex-direction: column;
-  gap: 0.1rem;
+/* The hand's total during a move is white; the bet and the result are coloured. */
+.handValue {
+  color: var(--color-text);
 }
 
-.buttonHint {
-  font-size: 0.625rem;
-  font-weight: 400;
-  opacity: 0.7;
+.plus {
+  color: var(--color-accent);
+}
+
+.minus {
+  color: #f07a73;
+}
+
+/* Gold note next to the moves, e.g. "Masz parę…" */
+.tip {
+  margin: 0;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid rgb(227 179 65 / 30%);
+  border-radius: 8px;
+  background: rgb(227 179 65 / 8%);
+  color: var(--color-gold);
+  font-size: 0.75rem;
 }
 
 @media (max-width: 700px) {

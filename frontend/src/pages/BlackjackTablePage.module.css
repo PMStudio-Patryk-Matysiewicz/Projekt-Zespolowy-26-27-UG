@@ -11,6 +11,19 @@
   color: var(--color-muted);
 }
 
+/* The felt and, on its right, the round panel. */
+.main {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(0, 1fr) 18rem;
+}
+
+@media (max-width: 1000px) {
+  .main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .controls {
   border-top: 1px solid var(--color-border);
   background: var(--color-surface);

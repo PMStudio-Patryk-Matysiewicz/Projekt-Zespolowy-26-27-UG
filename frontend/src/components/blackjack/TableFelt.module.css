@@ -48,6 +48,12 @@
   justify-content: center;
   gap: 0.4rem;
   min-height: 90px;
+  /* The shoe is up and to the right of the dealer cards. */
+  --deal-from-x: 32vw;
+  --deal-from-y: -2rem;
+  /* The discard tray is up and to the left. */
+  --discard-to-x: -32vw;
+  --discard-to-y: -1rem;
 }
 
 .placeholder {
@@ -158,6 +164,97 @@
   border-radius: 50%;
 }
 
+/* Discard tray (left) and shoe (right) in the top corners. */
+.pile {
+  position: absolute;
+  top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  color: rgb(238 243 240 / 45%);
+  font-size: 0.5625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.discard {
+  left: 1.5rem;
+}
+
+.shoe {
+  right: 1.5rem;
+}
+
+.dealerTotal {
+  animation: result-in 0.25s ease-out both;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Result of the round (screen 12). */
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  margin: 0 0 0.5rem;
+  padding: 0.7rem 1.5rem;
+  border: 1px solid rgb(238 243 240 / 18%);
+  border-radius: 12px;
+  background: rgb(0 0 0 / 45%);
+}
+
+/* Shows up once the dealer has finished drawing (delay set in TableFelt). */
+.result {
+  animation: result-in 0.35s ease-out both;
+}
+
+@keyframes result-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .result,
+  .dealerTotal {
+    animation: none;
+  }
+}
+
+.resultWin {
+  border-color: var(--color-accent);
+}
+
+.resultLoss {
+  border-color: rgb(229 87 79 / 70%);
+}
+
+.resultReason {
+  color: rgb(238 243 240 / 60%);
+  font-size: 0.75rem;
+}
+
+.resultText {
+  font-size: 1.25rem;
+}
+
+.resultWin .resultText {
+  color: var(--color-accent);
+}
+
+.resultLoss .resultText {
+  color: #f07a73;
+}
+
 /* Phones: only the player's seat, under the dealer. */
 @media (max-width: 800px) {
   .felt {
@@ -177,7 +274,24 @@
     margin-top: 0;
   }
 
+  .pile {
+    display: none;
+  }
+
   .seat:not(.mine) {
     display: none;
+  }
+}
+
+/* Clearing the table before the next round: totals, badges and the result fade out
+   while the cards fly to the discard tray. */
+.clearing .dealerTotal,
+.clearing .result {
+  animation: clear-out 0.25s ease-in both;
+}
+
+@keyframes clear-out {
+  to {
+    opacity: 0;
   }
 }

@@ -146,8 +146,8 @@ describe('BlackjackTablePage', () => {
     expect(screen.getByText('Wygrana +100')).toBeInTheDocument()
     expect(screen.getByRole('img', { name: '8 karo' })).toBeInTheDocument() // hole card shown
     expect(balance()).toBe('12 550')
-    // Next round: the bet bar is back, with "repeat the last bet".
-    expect(screen.getByRole('button', { name: 'Powtórz 100' })).toBeInTheDocument()
+    // Next round with the same stake (screen 12).
+    expect(screen.getByRole('button', { name: 'Następna runda · 100' })).toBeInTheDocument()
   })
 
   it('keeps the table, cards and bet after a page refresh', async () => {

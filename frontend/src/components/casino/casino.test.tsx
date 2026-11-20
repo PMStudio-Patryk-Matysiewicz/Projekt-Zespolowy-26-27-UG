@@ -81,3 +81,23 @@ describe('Chip', () => {
     expect(toChips(3)).toEqual([])
   })
 })
+
+describe('PlayingCard animation', () => {
+  it('can be dealt or flipped, with a delay', () => {
+    render(
+      <>
+        <PlayingCard code="AH" />
+        <PlayingCard code="AS" animation="deal" delay={360} />
+        <PlayingCard code="AD" animation="flip" />
+      </>,
+    )
+
+    const still = screen.getByRole('img', { name: 'As kier' })
+    const dealt = screen.getByRole('img', { name: 'As pik' })
+    const flipped = screen.getByRole('img', { name: 'As karo' })
+    expect(dealt.className).not.toBe(still.className)
+    expect(flipped.className).not.toBe(dealt.className)
+    expect(dealt).toHaveStyle({ animationDelay: '360ms' })
+    expect(still).not.toHaveAttribute('style')
+  })
+})

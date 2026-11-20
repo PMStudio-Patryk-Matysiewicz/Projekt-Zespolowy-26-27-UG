@@ -1,7 +1,18 @@
 import { describe, expect, it } from 'vitest'
 
 import type { HandView } from './api/blackjack'
-import { handTotal, lastBaseBet, roundSummary, shoeDealt, validateBet } from './blackjack'
+import {
+  DEAL_STEP,
+  dealerCardDelay,
+  discardDuration,
+  handTotal,
+  lastBaseBet,
+  playerCardDelay,
+  resultDelay,
+  roundSummary,
+  shoeDealt,
+  validateBet,
+} from './blackjack'
 import { makeTable } from './test/blackjackApi'
 
 const limits = { min_bet: 10, max_bet: 1000, balance: 5000 }
@@ -51,5 +62,30 @@ describe('round helpers', () => {
   it('tells how much of the shoe is dealt', () => {
     expect(shoeDealt(makeTable({ shoe: { remaining: 312, reshuffled: false } }))).toBe(0)
     expect(shoeDealt(makeTable({ shoe: { remaining: 78, reshuffled: false } }))).toBe(0.75)
+  })
+})
+
+describe('dealing animation timing', () => {
+  it('deals the first cards round the table: you, dealer, you, dealer', () => {
+    const order = [playerCardDelay(0), dealerCardDelay(0, false), playerCardDelay(1), dealerCardDelay(1, true)]
+    expect(order).toEqual([0, DEAL_STEP, 2 * DEAL_STEP, 3 * DEAL_STEP])
+  })
+
+  it('shows a drawn card at once, and the dealer’s extra cards one after another', () => {
+    expect(playerCardDelay(2)).toBe(0)
+    expect(dealerCardDelay(1, false)).toBe(0) // the hole card flips right away
+    expect(dealerCardDelay(3, false)).toBeGreaterThan(dealerCardDelay(2, false))
+  })
+
+  it('shows the result after the dealer’s last card', () => {
+    expect(resultDelay(4)).toBeGreaterThan(dealerCardDelay(3, false))
+    expect(resultDelay(2)).toBeGreaterThan(0)
+  })
+})
+
+describe('discard animation timing', () => {
+  it('waits longer when more cards have to fly to the discard tray', () => {
+    expect(discardDuration(4)).toBeGreaterThan(discardDuration(2))
+    expect(discardDuration(1)).toBeGreaterThan(0)
   })
 })

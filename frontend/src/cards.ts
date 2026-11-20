@@ -29,3 +29,9 @@ export function cardName({ rank, suit }: Card): string {
 }
 
 export const fullDeck: string[] = SUITS.flatMap((suit) => RANKS.map((rank) => rank + suit))
+
+// Short text of a card for lists: "10♠", "Q♥"; null (face down) -> "zakryta".
+export function cardShort(code: string | null): string {
+  const card = code ? parseCard(code) : undefined
+  return card ? card.rank + SUIT_SYMBOLS[card.suit] : 'zakryta'
+}

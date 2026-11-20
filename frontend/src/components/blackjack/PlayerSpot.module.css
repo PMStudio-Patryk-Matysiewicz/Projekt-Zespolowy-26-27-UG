@@ -29,6 +29,12 @@
 .cards {
   display: flex;
   padding-left: 16px;
+  /* The shoe is far up and to the right of the player. */
+  --deal-from-x: 30vw;
+  --deal-from-y: -55vh;
+  /* The discard tray is far up and to the left. */
+  --discard-to-x: -30vw;
+  --discard-to-y: -55vh;
 }
 
 /* Cards overlap like on a real table. */
@@ -74,7 +80,9 @@
   white-space: nowrap;
 }
 
+/* Fades in together with the result banner in the middle (delay set in PlayerSpot). */
 .result {
+  animation: result-in 0.35s ease-out both;
   padding: 0.15rem 0.55rem;
   border-radius: 6px;
   font-size: 0.6875rem;
@@ -112,4 +120,51 @@
 .icon {
   width: 14px;
   height: 14px;
+}
+
+/* The total shows up once the hand's cards have landed (delay set in PlayerSpot). */
+.total {
+  animation: total-in 0.25s ease-out both;
+}
+
+@keyframes result-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes total-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .total,
+  .result {
+    animation: none;
+  }
+}
+
+/* Clearing the table: everything but the cards (which fly away) fades out. */
+.clearing .total,
+.clearing .bet,
+.clearing .result {
+  animation: clear-out 0.25s ease-in both;
+}
+
+@keyframes clear-out {
+  to {
+    opacity: 0;
+  }
 }

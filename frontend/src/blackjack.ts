@@ -35,9 +35,7 @@ export const resultLabels: Record<HandResult, string> = {
 
 // "Wygrywasz 150 żetonów" etc. for a settled round.
 export function roundSummary(hands: HandView[]): string {
-  const stake = hands.reduce((sum, h) => sum + h.bet, 0)
-  const payout = hands.reduce((sum, h) => sum + (h.payout ?? 0), 0)
-  const net = payout - stake
+  const net = roundNet(hands)
   if (net > 0) return `Wygrywasz ${formatChips(net)} żetonów`
   if (net < 0) return `Przegrywasz ${formatChips(-net)} żetonów`
   return 'Remis — stawka wraca do Ciebie'
@@ -51,4 +49,55 @@ export function shoeDealt(table: BlackjackTable): number {
 // "17" or, for a soft hand, "7/17" (ace counted as 1 or 11).
 export function handTotal(hand: Pick<HandView, 'total' | 'soft'>): string {
   return hand.soft && hand.total <= 21 ? `${hand.total - 10}/${hand.total}` : String(hand.total)
+}
+
+// Chips won (+) or lost (-) in a settled round, over all the player's hands.
+export function roundNet(hands: HandView[]): number {
+  return hands.reduce((sum, h) => sum + (h.payout ?? 0) - h.bet, 0)
+}
+
+// How the dealer's hand ended, for the result banner and the round panel.
+export function dealerOutcome(table: BlackjackTable): string | undefined {
+  if (table.phase !== 'settled' || table.dealer.cards.length === 0) return undefined
+  const { cards, total } = table.dealer
+  if (total > 21) return 'Krupier przekroczył 21'
+  if (total === 21 && cards.length === 2) return 'Krupier ma blackjacka'
+  return `Krupier ma ${total}`
+}
+
+// "twarda" (no ace counted as 11) or "miękka" (an ace counts as 11).
+export function handKind(hand: Pick<HandView, 'soft'>): string {
+  return hand.soft ? 'miękka' : 'twarda'
+}
+
+// --- dealing animation timing (ms) ---------------------------------------------------------
+// The first two cards go round the table like at a real table: you, dealer, you, dealer
+// (face down). Cards drawn later (hit, double, the dealer's draws) come one after another.
+
+export const DEAL_STEP = 180
+const DEALER_DRAW_START = 450 // after the hole card has flipped
+const DEALER_DRAW_STEP = 380
+
+export function playerCardDelay(index: number): number {
+  return index < 2 ? index * 2 * DEAL_STEP : 0
+}
+
+export function dealerCardDelay(index: number, faceDown: boolean): number {
+  if (index === 0) return DEAL_STEP
+  if (index === 1) return faceDown ? 3 * DEAL_STEP : 0 // revealed: flips right away
+  return DEALER_DRAW_START + (index - 2) * DEALER_DRAW_STEP
+}
+
+// The result banner waits until the dealer's last card has landed.
+export function resultDelay(dealerCards: number): number {
+  return dealerCards > 2 ? DEALER_DRAW_START + (dealerCards - 2) * DEALER_DRAW_STEP + 200 : 450
+}
+
+// Clearing the table before the next round: the old cards fly to the discard tray one after
+// another (DISCARD_STEP apart); the next round is shown once the last one is gone.
+export const DISCARD_STEP = 60
+const DISCARD_FLIGHT = 450
+
+export function discardDuration(cardCount: number): number {
+  return DISCARD_FLIGHT + Math.max(0, cardCount - 1) * DISCARD_STEP + 100
 }
